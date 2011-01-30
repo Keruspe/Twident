@@ -16,10 +16,10 @@ Pino uses next libraries and utilities:
 You must install dev-packages for this libraries to build Pino.
 
 
-Building Pino
+Building Twident
 =======================
 
-Pino uses a WAF build system. To build and install Pino use this commands:
+Pino uses a WAF build system. To build and install Twident use this commands:
 
     ./waf configure --prefix=/usr
     ./waf build

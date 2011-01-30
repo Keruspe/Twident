@@ -15,8 +15,6 @@ set(PACKAGE_VERSION "${APPNAME}-${VERSION}")
 set(APP_VERSION "${VERSION}")
 set(GETTEXT_PACKAGE "${APPNAME}")
 string(REGEX REPLACE "([0-9])\\.([0-9]).*" "\\1.\\2" VERSION_MAJOR_MINOR ${VERSION})
-file(READ AUTHORS _AUTHORS)
-string(REPLACE "\n" "\\n" AUTHORS ${_AUTHORS})
 
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/config.h.in"
@@ -223,7 +221,6 @@ endif()
 set(pino_DOCS
   COPYING
   README
-  AUTHORS
   INSTALL
 )
 install(FILES ${pino_DOCS} DESTINATION share/doc/pino)

@@ -50,7 +50,6 @@ namespace Config
 	public const string DELETE_PATH;
 	public const string USERPIC_PATH;
 	public const string TEMPLATES_PATH;
-	public const string AUTHORS;
 	
 	public const string CONS_KEY;
 	public const string CONS_SEC;
