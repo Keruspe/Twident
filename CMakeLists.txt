@@ -56,7 +56,6 @@ pkg_check_modules(GIO REQUIRED "gio-2.0 >= 2.0")
 pkg_check_modules(LIBNOTIFY REQUIRED "libnotify")
 pkg_check_modules(LIBSOUP REQUIRED "libsoup-2.4 >= 2.4")
 pkg_check_modules(LIBXML REQUIRED "libxml-2.0 >= 2.0")
-pkg_check_modules(WEBKIT REQUIRED "webkit-1.0 >= 1.0")
 pkg_check_modules(LIBUNIQUE REQUIRED "unique-1.0 >= 1.0")
 pkg_check_modules(GTKSPELL REQUIRED "gtkspell-2.0 >= 2.0")
 pkg_check_modules(REST REQUIRED "rest-0.6 >= 0.6")
@@ -94,7 +93,6 @@ PACKAGES
   libnotify
   libsoup-2.4
   libxml-2.0
-  webkit-1.0
   unique-1.0
   rest-0.6
   rest-extras-0.6

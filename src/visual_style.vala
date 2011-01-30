@@ -29,7 +29,6 @@ public class VisualStyle : GLib.Object {
 		
 		Value? v = new Value(typeof(Gdk.Color));
 		if(v != null) {
-			style.get_style_property(typeof(Gtk.Widget), "link-color", v);
 			lk_color = rgb_to_hex((Gdk.Color) v);
 			debug(lk_color);
 		}
