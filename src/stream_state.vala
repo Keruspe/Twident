@@ -1,5 +1,5 @@
 using Gee;
-using PinoEnums;
+using TwidentEnums;
 
 /**
  * Holder all properties of existing streams in account

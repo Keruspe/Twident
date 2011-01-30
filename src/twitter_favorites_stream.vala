@@ -1,5 +1,5 @@
 using Gee;
-using PinoEnums;
+using TwidentEnums;
 
 namespace Twitter {
 

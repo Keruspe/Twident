@@ -1,5 +1,5 @@
 using Gee;
-using PinoEnums;
+using TwidentEnums;
 using Gtk;
 
 /** Abstract class for any account in this app */

@@ -3,8 +3,8 @@
 def build(bld):
 	prog = bld.new_task_gen(
 		'cc', 'program',
-		name = 'pino',
-		target = 'pino',
+		name = 'twident',
+		target = 'twident',
 		uselib = 'GTK+ GOBJECT LIBXML GEE LIBNOTIFY LIBSOUP WEBKIT GTHREAD LIBUNIQUE GTKSPELL REST',
 		packages = 'gtk+-2.0 gee-1.0 gio-2.0 libnotify libsoup-2.4 libxml-2.0 webkit-1.0 rest config unique-1.0',
 		ccflags = ['-include', 'config.h', '-DYAML_DECLARE_STATIC'],

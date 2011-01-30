@@ -1,7 +1,7 @@
 Requirements
 =======================
 
-Pino uses next libraries and utilities:
+Twident uses next libraries and utilities:
 
     valac (>=0.7)
     gcc (>=4.2)
@@ -13,13 +13,13 @@ Pino uses next libraries and utilities:
     libxml-2.0
     webkit-1.0
 
-You must install dev-packages for this libraries to build Pino.
+You must install dev-packages for this libraries to build Twident.
 
 
 Building Twident
 =======================
 
-Pino uses a WAF build system. To build and install Twident use this commands:
+Twident uses a WAF build system. To build and install Twident use this commands:
 
     ./waf configure --prefix=/usr
     ./waf build

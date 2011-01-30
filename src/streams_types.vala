@@ -1,5 +1,5 @@
 using Gee;
-using PinoEnums;
+using TwidentEnums;
 
 /** Abstract class, holdes all available types of any streams */
 public class StreamsTypes : HashMap<StreamEnum, StreamMeta> {

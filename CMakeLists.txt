@@ -3,11 +3,11 @@
 
 cmake_minimum_required(VERSION 2.6)
 
-project("pino" C)
+project("twident" C)
 
 set(VERSION "0.2.9")
 
-set(APPNAME "pino3")
+set(APPNAME "twident3")
 set(PACKAGE "${APPNAME}")
 set(PACKAGE_NAME "${APPNAME}")
 set(PACKAGE_STRING "${APPNAME}-${VERSION}")
@@ -41,7 +41,7 @@ ensure_vala_version("0.7.9" MINIMUM)
 
 option(ENABLE_DEBUG "Enable debug messages" OFF)
 option(UBUNTU_ICONS "Install icons for Ubuntu mono themes" OFF)
-set(pino_VALA_OPTIONS)
+set(twident_VALA_OPTIONS)
 
 #execute_process(COMMAND ${VALA_EXECUTABLE} "--version")
 
@@ -62,26 +62,26 @@ pkg_check_modules(LIBINDICATE "indicate >= 0.3")
 
 if(${LIBINDICATE_FOUND})
   message(STATUS "libindicate found, support enabled...")
-  set(pino_VALA_OPTIONS ${pino_VALA_OPTIONS} -D LIBINDICATE)
+  set(twident_VALA_OPTIONS ${twident_VALA_OPTIONS} -D LIBINDICATE)
 else()
   message(STATUS "libindicate not found, support disabled...")
 endif()
 
 
 if(ENABLE_DEBUG)
-  set(pino_VALA_OPTIONS ${pino_VALA_OPTIONS} -D HAS_DEBUG)
+  set(twident_VALA_OPTIONS ${twident_VALA_OPTIONS} -D HAS_DEBUG)
 endif()
 if(UBUNTU_ICONS)
-  set(pino_VALA_OPTIONS ${pino_VALA_OPTIONS} -D HAS_UBUNTUICONS)
+  set(twident_VALA_OPTIONS ${twident_VALA_OPTIONS} -D HAS_UBUNTUICONS)
 endif()
 
-file(GLOB pino_VALA_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.vala")
-#list(REMOVE_ITEM pino_VALA_SOURCES "src/oauth-client.vala")
+file(GLOB twident_VALA_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.vala")
+#list(REMOVE_ITEM twident_VALA_SOURCES "src/oauth-client.vala")
 
 
 vala_precompile(
-pino_C_SOURCES
-  ${pino_VALA_SOURCES}
+twident_C_SOURCES
+  ${twident_VALA_SOURCES}
 PACKAGES
   glib-2.0
   gobject-2.0
@@ -98,7 +98,7 @@ OPTIONS
   --thread
   -g
   --save-temps
-  ${pino_VALA_OPTIONS}
+  ${twident_VALA_OPTIONS}
 CUSTOM_VAPIS
   ${CMAKE_CURRENT_SOURCE_DIR}/src/vapi/config.vapi
 )
@@ -141,14 +141,14 @@ link_libraries(
 include_directories(src/vapi/)
 add_definitions(-std=c99)
 
-add_executable(pino
-  ${pino_C_SOURCES}
+add_executable(twident
+  ${twident_C_SOURCES}
   #src/vapi/sha1.c
   src/vapi/time_parser.c
   src/vapi/img_cache_saver.c
 )
 
-install(TARGETS pino DESTINATION bin)
+install(TARGETS twident DESTINATION bin)
 
 
 find_program(MSGFMT_EXECUTABLE msgfmt)
@@ -172,7 +172,7 @@ endforeach()
 add_custom_target(locales ALL DEPENDS ${MO_FILES})
 
 
-set(pino_IMAGES
+set(twident_IMAGES
   img/delete_status.png
   img/direct_fresh.svg
   img/direct_reply.png
@@ -194,46 +194,46 @@ set(pino_IMAGES
   img/rt.png
   img/conversation.png
 )
-install(FILES ${pino_IMAGES} DESTINATION share/pino/icons)
+install(FILES ${twident_IMAGES} DESTINATION share/twident/icons)
 
 
-set(pino_ICONS
-  img/pino_fresh.svg
-  img/pino.svg
+set(twident_ICONS
+  img/twident_fresh.svg
+  img/twident.svg
 )
-install(FILES ${pino_ICONS} DESTINATION share/icons/hicolor/scalable/apps)
+install(FILES ${twident_ICONS} DESTINATION share/icons/hicolor/scalable/apps)
 
 
-set(pino_UBUNTU_ICONS_DARK
- img/ubuntu-mono-dark/pino-tray-icon.svg
- img/ubuntu-mono-dark/pino-tray-icon-fresh.svg
+set(twident_UBUNTU_ICONS_DARK
+ img/ubuntu-mono-dark/twident-tray-icon.svg
+ img/ubuntu-mono-dark/twident-tray-icon-fresh.svg
 )
-set(pino_UBUNTU_ICONS_LIGHT
-  img/ubuntu-mono-light/pino-tray-icon.svg
-  img/ubuntu-mono-light/pino-tray-icon-fresh.svg
+set(twident_UBUNTU_ICONS_LIGHT
+  img/ubuntu-mono-light/twident-tray-icon.svg
+  img/ubuntu-mono-light/twident-tray-icon-fresh.svg
 )
 if(UBUNTU_ICONS)
-  install(FILES ${pino_UBUNTU_ICONS_DARK} DESTINATION share/icons/ubuntu-mono-dark/apps/22)
-  install(FILES ${pino_UBUNTU_ICONS_LIGHT} DESTINATION share/icons/ubuntu-mono-light/apps/22)
+  install(FILES ${twident_UBUNTU_ICONS_DARK} DESTINATION share/icons/ubuntu-mono-dark/apps/22)
+  install(FILES ${twident_UBUNTU_ICONS_LIGHT} DESTINATION share/icons/ubuntu-mono-light/apps/22)
 endif()
 
 
-set(pino_DOCS
+set(twident_DOCS
   COPYING
   README
   INSTALL
 )
-install(FILES ${pino_DOCS} DESTINATION share/doc/pino)
+install(FILES ${twident_DOCS} DESTINATION share/doc/twident)
 
 
-set(pino_TEMPLATES
+set(twident_TEMPLATES
   templates/main.tpl
   templates/status.tpl
   templates/status_direct.tpl
   templates/status_me.tpl
 )
-install(FILES ${pino_TEMPLATES} DESTINATION share/pino/templates)
+install(FILES ${twident_TEMPLATES} DESTINATION share/twident/templates)
 
 
-install(FILES pino.desktop DESTINATION share/applications)
-install(FILES indicator/pino DESTINATION share/indicators/messages/applications)
+install(FILES twident.desktop DESTINATION share/applications)
+install(FILES indicator/twident DESTINATION share/indicators/messages/applications)

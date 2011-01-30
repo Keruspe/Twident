@@ -90,7 +90,7 @@ public class MainWindow : Window {
 	private void menu_setup() {
 		ActionGroup act_group = new ActionGroup("main");
 		
-		Action file_menu = new Action("FileMenu", "Pino", null, null);
+		Action file_menu = new Action("FileMenu", "Twident", null, null);
 		Action edit_menu = new Action("EditMenu", "Edit", null, null);
 		Action view_menu = new Action("ViewMenu", "View", null, null);
 		Action help_menu = new Action("HelpMenu", "Help", null, null);

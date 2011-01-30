@@ -1,4 +1,4 @@
-namespace PinoEnums {
+namespace TwidentEnums {
 
 	public enum StreamEnum {
 		HOME,

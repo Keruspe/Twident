@@ -1,6 +1,6 @@
 using Gee;
 using Xml;
-using PinoEnums;
+using TwidentEnums;
 
 public class Accounts : ArrayList<AAccount> {
 	
@@ -99,7 +99,7 @@ public class Accounts : ArrayList<AAccount> {
 		case "gchararray":
 			return v.get_string();
 		
-		case "PinoEnumsStreamEnum":
+		case "TwidentEnumsStreamEnum":
 			return v.get_enum().to_string();
 		
 		default:
@@ -128,7 +128,7 @@ public class Accounts : ArrayList<AAccount> {
 			v.set_string(data);
 			break;
 		
-		case "PinoEnumsStreamEnum":
+		case "TwidentEnumsStreamEnum":
 			v.set_enum(data.to_int());
 			break;
 		

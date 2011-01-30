@@ -1,6 +1,6 @@
 using Gee; 
 using Xml;
-using PinoEnums;
+using TwidentEnums;
 
 public class Settings : Object {
 	
@@ -87,7 +87,7 @@ public class Settings : Object {
 		case "gchararray":
 			return v.get_string();
 		
-		case "PinoEnumsStreamEnum":
+		case "TwidentEnumsStreamEnum":
 			return v.get_enum().to_string();
 		
 		case "GeeArrayList": //strings only!
@@ -127,7 +127,7 @@ public class Settings : Object {
 			v.set_string(data);
 			break;
 		
-		case "PinoEnumsStreamEnum":
+		case "TwidentEnumsStreamEnum":
 			v.set_enum(data.to_int());
 			break;
 		

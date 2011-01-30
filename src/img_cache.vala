@@ -14,7 +14,7 @@ public class ImgCache : Object {
 			debug(e.message);
 		}
 		
-		cache_path = Environment.get_user_cache_dir() + "/%s".printf("pino/");
+		cache_path = Environment.get_user_cache_dir() + "/%s".printf("twident/");
 		
 		var cache_dir = File.new_for_path(cache_path);
 		
