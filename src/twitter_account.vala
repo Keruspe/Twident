@@ -6,8 +6,8 @@ namespace Twitter {
 
 public class Account : AAccount {
 	
-	protected virtual string consumer_key {get; set; default = "Rcy44V1o5z8j68UHgmWHA";}
-	protected virtual string consumer_secret {get; set; default = "CsqwYwk3qWFHCbB4fZvpqS0VTHSTVlOIRy1SMj1GjQ";}
+	protected virtual string consumer_key {get; set; default = "DbGeqiAS0U3r4a5U5zFg";}
+	protected virtual string consumer_secret {get; set; default = "uYhZKGAvtzyYzGl6KsjTpJ6kdNzDKG8r1dcpoQGVV4";}
 	protected Rest.Proxy proxy;
 	
 	protected virtual string root_url {get; set; default = "http://twitter.com/";}
