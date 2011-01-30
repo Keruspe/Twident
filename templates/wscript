@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+
+def build(bld):
+	bld.install_files('${PREFIX}/share/pino/templates', 'main.tpl')
+	bld.install_files('${PREFIX}/share/pino/templates', 'status.tpl')
+	bld.install_files('${PREFIX}/share/pino/templates', 'status_me.tpl')
+	bld.install_files('${PREFIX}/share/pino/templates', 'status_direct.tpl')

@@ -1,0 +1,32 @@
+Requirements
+=======================
+
+Pino uses next libraries and utilities:
+
+    valac (>=0.7)
+    gcc (>=4.2)
+    gtk+-2.0
+    gee-1.0
+    gio-2.0
+    libnotify
+    libsoup-2.4
+    libxml-2.0
+    webkit-1.0
+
+You must install dev-packages for this libraries to build Pino.
+
+
+Building Pino
+=======================
+
+Pino uses a WAF build system. To build and install Pino use this commands:
+
+    ./waf configure --prefix=/usr
+    ./waf build
+    sudo ./waf install
+
+For uninstalling type this:
+
+    sudo ./waf uninstall
+
+Visit http://code.google.com/p/waf/ for more information.

@@ -1,0 +1,43 @@
+#ifndef _PINO_CONFIG_H
+#define _PINO_CONFIG_H
+
+
+#define PACKAGE "${PACKAGE}"
+#define PACKAGE_NAME "${PACKAGE_NAME}"
+#define PACKAGE_STRING "${PACKAGE_STRING}"
+#define PACKAGE_VERSION "${PACKAGE_VERSION}"
+
+#define VERSION_MAJOR_MINOR "${VERSION_MAJOR_MINOR}"
+#define LOCALE_DIR "${CMAKE_INSTALL_PREFIX}/share/locale/"
+#define GETTEXT_PACKAGE "${GETTEXT_PACKAGE}"
+#define APPNAME "${APPNAME}"
+#define AUTHORS "${AUTHORS}"
+
+#define APP_VERSION "0.2.95"
+#define DESKTOP_FILE_PATH "${CMAKE_INSTALL_PREFIX}/share/applications/pino.desktop"
+#define APP_PATH "${CMAKE_INSTALL_PREFIX}/bin/pino"
+#define LOGO_PATH "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/pino.svg"
+#define LOGO_FRESH_PATH "${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/pino_fresh.svg"
+#define MENTIONS_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/mentions.svg"
+#define GROUP_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/group.svg"
+#define MENTIONS_FRESH_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/mentions_fresh.svg"
+#define TIMELINE_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/timeline.svg"
+#define TIMELINE_FRESH_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/timeline_fresh.svg"
+#define PUBLIC_TIMELINE_ICON "${CMAKE_INSTALL_PREFIX}/share/pino/icons/public.svg"
+#define DIRECT_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/direct.svg"
+#define DIRECT_FRESH_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/direct_fresh.svg"
+#define UPDATING_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/updating.png"
+#define DIRECT_REPLY_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/direct_reply.png"
+//#define FAVORITE_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/favorite.png"
+//#define FAVORITE_NO_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/favorite_no.png"
+#define SERVICE_TWITTER_ICON "${CMAKE_INSTALL_PREFIX}/share/pino/icons/service-twitter.png"
+#define SERVICE_IDENTICA_ICON "${CMAKE_INSTALL_PREFIX}/share/pino/icons/service-identica.png"
+#define REPLY_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/reply.png"
+#define RT_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/rt.png"
+#define CONVERSATION_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/conversation.png"
+#define RETWEET_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/retweet.svg"
+#define DELETE_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/delete_status.png"
+#define USERPIC_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/icons/userpic.svg"
+#define TEMPLATES_PATH "${CMAKE_INSTALL_PREFIX}/share/pino/templates"
+
+#endif /* _PINO_CONFIG_H */

@@ -1,0 +1,15 @@
+[Desktop Entry]
+Exec=pino
+Name=Pino - Twitter and Identi.ca client
+Name[ua]=Pino - клієнт для Twitter і Identi.ca
+Name[ru]=Pino - клиент для Twitter и Identi.ca
+Icon=pino
+Type=Application
+Categories=GTK;Network;InstantMessaging;
+Comment=Fast, easy, and free Twitter and Identi.ca client
+Comment[ua]=Швидкий, простий та вільний Twitter клієнт
+Comment[ru]=Быстрый, простой и свободный Twitter клиент
+GenericName=Twitter Client
+GenericName[ua]=Pino
+GenericName[ru]=Pino
+Terminal=false
