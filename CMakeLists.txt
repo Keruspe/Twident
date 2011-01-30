@@ -54,7 +54,6 @@ pkg_check_modules(GIO REQUIRED "gio-2.0 >= 2.0")
 pkg_check_modules(LIBNOTIFY REQUIRED "libnotify")
 pkg_check_modules(LIBSOUP REQUIRED "libsoup-2.4 >= 2.4")
 pkg_check_modules(LIBXML REQUIRED "libxml-2.0 >= 2.0")
-pkg_check_modules(LIBUNIQUE REQUIRED "unique-1.0 >= 1.0")
 pkg_check_modules(GTKSPELL REQUIRED "gtkspell-2.0 >= 2.0")
 pkg_check_modules(REST REQUIRED "rest-0.6 >= 0.6")
 pkg_check_modules(RESTEXTRAS REQUIRED "rest-extras-0.6 >= 0.6")
@@ -91,7 +90,6 @@ PACKAGES
   libnotify
   libsoup-2.4
   libxml-2.0
-  unique-1.0
   rest-0.6
   rest-extras-0.6
 OPTIONS
@@ -113,8 +111,6 @@ add_definitions(
   ${LIBNOTIFY_CFLAGS}
   ${LIBSOUP_CFLAGS}
   ${LIBXML_CFLAGS}
-  ${WEBKIT_CFLAGS}
-  ${LIBUNIQUE_CFLAGS}
   ${GTKSPELL_CFLAGS}
   ${LIBINDICATE_CFLAGS}
   ${REST_CFLAGS}
@@ -130,8 +126,6 @@ link_libraries(
   ${LIBNOTIFY_LIBRARIES}
   ${LIBSOUP_LIBRARIES}
   ${LIBXML_LIBRARIES}
-  ${WEBKIT_LIBRARIES}
-  ${LIBUNIQUE_LIBRARIES}
   ${GTKSPELL_LIBRARIES}
   ${LIBINDICATE_LIBRARIES}
   ${REST_LIBRARIES}
