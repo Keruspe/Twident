@@ -5,9 +5,9 @@ cmake_minimum_required(VERSION 2.6)
 
 project("twident" C)
 
-set(VERSION "0.2.9")
+set(VERSION "0.1")
 
-set(APPNAME "twident3")
+set(APPNAME "twident")
 set(PACKAGE "${APPNAME}")
 set(PACKAGE_NAME "${APPNAME}")
 set(PACKAGE_STRING "${APPNAME}-${VERSION}")
