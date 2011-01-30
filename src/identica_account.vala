@@ -7,8 +7,8 @@ public class Account : Twitter.Account {
 	
 	//public string s_login {get; set; default = "";}
 	//public string s_password {get; set; default = "";}
-	protected override string consumer_key {get; set; default = "d86a9a9bac8c07e58f922d0dd2a1ceb3";}
-	protected override string consumer_secret {get; set; default = "0d33c54fca5a3481e0a0968d2c2326c2";}
+	protected override string consumer_key {get; set; default = "8c591ab68bd1c1b457b9b220dc8e4fbe";}
+	protected override string consumer_secret {get; set; default = "29992633abe06ae7e9c386a9a80508f0";}
 	
 	public override string id {get; set; default = "identica";}
 	
