@@ -28,8 +28,8 @@ public class CreateDialogGeneric : Gtk.Dialog {
 		vbox.set_spacing(2);
 		vbox.pack_start(info, false, false, 0);
 		
-		add_button(STOCK_CANCEL, ResponseType.CANCEL);
-		ok_btn = (Button) add_button(STOCK_OK, ResponseType.OK);
+		add_button(Stock.CANCEL, ResponseType.CANCEL);
+		ok_btn = (Button) add_button(Stock.OK, ResponseType.OK);
 		ok_btn.set_sensitive(false);
 	}
 }

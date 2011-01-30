@@ -2,7 +2,7 @@ using Gtk;
 
 public class StatusBox : TextView {
 	
-	private Window parent;
+	private Window parentWindow;
 	private MenuIndicator indicator;
 	private Accounts accounts;
 	public VBox vbox;
@@ -13,7 +13,7 @@ public class StatusBox : TextView {
 	private int statuses_queue = 0;
 	
 	public StatusBox(Window parent, Accounts accounts) {
-		this.parent = parent;
+		this.parentWindow = parent;
 		this.indicator = ((MainWindow) parent).indicator;
 		this.accounts = accounts;
 		
@@ -49,7 +49,7 @@ public class StatusBox : TextView {
 	}
 	
 	private void text_changed() {
-		int length = (int) buffer.text.len();
+		int length = (int) buffer.text.length;
 		acc_box.set_count(140 - length);
 	}
 	
@@ -63,7 +63,7 @@ public class StatusBox : TextView {
 			if(buffer.text.length > 0) {
 				enter_pressed();
 			} else { // if nothing to send
-				var message_dialog = new MessageDialog(parent,
+				var message_dialog = new MessageDialog(parentWindow,
 				Gtk.DialogFlags.DESTROY_WITH_PARENT | Gtk.DialogFlags.MODAL,
 				Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
 				(_("Type something first")));
@@ -90,14 +90,14 @@ public class StatusBox : TextView {
 		reply_id = status.id;
 		buffer.text = "@%s ".printf(status.user.name);
 		
-		parent.set_focus(this);
+		parentWindow.set_focus(this);
 	}
 	
 	private void enter_pressed() {
 		debug("enter");
 		
 		if(settings.selected_for_posting.size < 1) {
-			Gtk.MessageDialog dlg = new Gtk.MessageDialog(parent, Gtk.DialogFlags.MODAL,
+			Gtk.MessageDialog dlg = new Gtk.MessageDialog(parentWindow, Gtk.DialogFlags.MODAL,
 				Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
 				_("You need to choose some accounts for sending statuses"));
 			

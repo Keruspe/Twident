@@ -88,20 +88,20 @@ public class MainWindow : Window {
 	}
 	
 	private void menu_setup() {
-		ActionGroup act_group = new ActionGroup("main");
+		Gtk.ActionGroup act_group = new Gtk.ActionGroup("main");
 		
-		Action file_menu = new Action("FileMenu", "Twident", null, null);
-		Action edit_menu = new Action("EditMenu", "Edit", null, null);
-		Action view_menu = new Action("ViewMenu", "View", null, null);
-		Action help_menu = new Action("HelpMenu", "Help", null, null);
+		Gtk.Action file_menu = new Gtk.Action("FileMenu", "Twident", null, null);
+		Gtk.Action edit_menu = new Gtk.Action("EditMenu", "Edit", null, null);
+		Gtk.Action view_menu = new Gtk.Action("ViewMenu", "View", null, null);
+		Gtk.Action help_menu = new Gtk.Action("HelpMenu", "Help", null, null);
 		
-		Action create_account_act = new Action("CreateAccount", _("Add account"),
+		Gtk.Action create_account_act = new Gtk.Action("CreateAccount", _("Add account"),
 			_("Add account"), null);
 		
 		//setup all account types
 		string accounts_string = "";
 		foreach(Type t in accounts_types.keys) {
-			Action acc_act = new Action(t.name(), accounts_types.get(t).name,
+			Gtk.Action acc_act = new Gtk.Action(t.name(), accounts_types.get(t).name,
 				accounts_types.get(t).description, null);
 			
 			try {

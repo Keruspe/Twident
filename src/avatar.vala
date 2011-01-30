@@ -10,7 +10,7 @@ public class Avatar : Image {
 	private const double M_PI = 3.1415926535;
 	private const double MAX_RGB = (double) uint16.MAX;
 	
-	private unowned Thread? thread = null;
+	private unowned Thread<void*>? thread = null;
 	
 	public Avatar() {
 		GLib.Object();

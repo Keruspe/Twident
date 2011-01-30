@@ -12,7 +12,7 @@ public class CreateDialog : CreateDialogGeneric {
 	private Button access_btn;
 	private InfoBar acc_info;
 	
-	private weak Thread? request_token_thread = null;
+	private weak Thread<void*>? request_token_thread = null;
 	private bool must_close = false;
 	private OAuthProxy proxy;
 	
@@ -101,7 +101,7 @@ public class CreateDialog : CreateDialogGeneric {
 		tprogress.start();
 		
 		try {
-			request_token_thread = Thread.create(request_token, true);
+			request_token_thread = Thread.create<void*>(request_token, true);
 			//jo = request_token_thread.join();
 		} catch(ThreadError e) {
 			debug(e.message);
@@ -113,7 +113,7 @@ public class CreateDialog : CreateDialogGeneric {
 		pin.set_sensitive(false);
 		
 		try {
-			request_token_thread = Thread.create(access_token, true);
+			request_token_thread = Thread.create<void*>(access_token, true);
 		} catch(ThreadError e) {
 			debug(e.message);
 		}

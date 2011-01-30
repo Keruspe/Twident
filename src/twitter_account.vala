@@ -246,7 +246,7 @@ public class Account : AAccount {
 	
 	protected void load_userpic_thread() {
 		try {
-			unowned Thread thread = Thread.create(load_userpic, true);
+			unowned Thread<void*> thread = Thread.create<void*>(load_userpic, true);
 		} catch(GLib.Error e) {
 			debug(e.message); //TODO
 		}
