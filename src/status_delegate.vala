@@ -24,7 +24,7 @@ public class StatusDelegate : EventBox {
 	private SmartTimer timer;
 	
 	private Gdk.Pixbuf? rt_pixbuf = null;
-	private const double MAX_RGB = (double) uint16.MAX;
+	private double MAX_RGB = (double) uint16.MAX;
 	
 	private string date_string = "<small><span foreground='#888'><b>%s</b></span></small>";
 	

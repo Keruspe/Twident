@@ -7,7 +7,6 @@ public class BgBox : HBox {
 	
 	public bool fresh {get; set; default = false;}
 	public bool favorited {get; set; default = false;}
-	private const double MAX_RGB = (double) uint16.MAX;
 	
 	//it's not actualy true colors, like in Gdk
 	private Gdk.Color color_fresh;

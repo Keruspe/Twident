@@ -8,7 +8,7 @@ public class Avatar : Image {
 	public int pix_size {get; set; default = 1;}
 	
 	private const double M_PI = 3.1415926535;
-	private const double MAX_RGB = (double) uint16.MAX;
+	private double MAX_RGB = (double) uint16.MAX;
 	
 	private unowned Thread<void*>? thread = null;
 	

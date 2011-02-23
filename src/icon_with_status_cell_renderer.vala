@@ -5,7 +5,7 @@ public class IconWithStatusCellRrenderer : CellRenderer {
 	
 	private const double TEXT_W_OFFSET = 6;
 	private const double TEXT_H_OFFSET = 3;
-	private const double MAX_RGB = (double) uint16.MAX;
+	private double MAX_RGB = (double) uint16.MAX;
 	private const int RADIUS = 5;
 	private const double M_PI = 3.1415926535;
 	
