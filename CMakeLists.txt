@@ -219,15 +219,5 @@ set(twident_DOCS
 )
 install(FILES ${twident_DOCS} DESTINATION share/doc/twident)
 
-
-set(twident_TEMPLATES
-  templates/main.tpl
-  templates/status.tpl
-  templates/status_direct.tpl
-  templates/status_me.tpl
-)
-install(FILES ${twident_TEMPLATES} DESTINATION share/twident/templates)
-
-
 install(FILES twident.desktop DESTINATION share/applications)
 install(FILES indicator/twident DESTINATION share/indicators/messages/applications)
