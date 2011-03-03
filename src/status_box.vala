@@ -3,7 +3,6 @@ using Gtk;
 public class StatusBox : TextView {
 	
 	private Window parentWindow;
-	private MenuIndicator indicator;
 	private Accounts accounts;
 	public VBox vbox;
 	private StatusChooseBar acc_box;
@@ -14,14 +13,12 @@ public class StatusBox : TextView {
 	
 	public StatusBox(Window parent, Accounts accounts) {
 		this.parentWindow = parent;
-		this.indicator = ((MainWindow) parent).indicator;
 		this.accounts = accounts;
 		
 		accounts.status_sent.connect((account, ok, msg) => {
 			statuses_queue -= 1;
 			
 			if(statuses_queue < 1) {
-				indicator.hide_queue();
 				vbox.set_sensitive(true);
 				buffer.text = "";
 			}
@@ -110,7 +107,6 @@ public class StatusBox : TextView {
 		vbox.set_sensitive(false);
 		
 		statuses_queue = settings.selected_for_posting.size;
-		indicator.add_queue(_("Sending statuses: %d").printf(statuses_queue));
 		
 		foreach(string hash in settings.selected_for_posting) {
 			AAccount? account = accounts.get_by_hash(hash);
