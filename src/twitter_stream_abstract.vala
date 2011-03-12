@@ -54,9 +54,9 @@ public abstract class StreamAbstract : AStream {
 		Rest.ProxyCallAsyncCallback callback;
 		
 		if(more)
-			callback = (ProxyCallAsyncCallback) get_more_response;
+			callback = get_more_response;
 		else
-			callback = (ProxyCallAsyncCallback) get_response;
+			callback = get_response;
 		
 		set_call_params(more);
 		try {

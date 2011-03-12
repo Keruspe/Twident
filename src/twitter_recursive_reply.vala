@@ -36,7 +36,7 @@ public class RecursiveReply : GLib.Object  {
 		call.set_function("statuses/show/%s.xml".printf(status.reply.status_id));
 		call.set_method("GET");
 		//debug("statuses/show/%s.xml".printf(status.id));
-		Rest.ProxyCallAsyncCallback callback = (Rest.ProxyCallAsyncCallback) status_get_respose;
+		Rest.ProxyCallAsyncCallback callback = status_get_respose;
 		try {
 			call.run_async(callback, this);
 		} catch (GLib.Error e) {

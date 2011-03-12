@@ -285,7 +285,7 @@ public class Account : AAccount {
 		call.set_function("statuses/update.xml");
 		call.set_method("POST");
 		
-		Rest.ProxyCallAsyncCallback callback = (Rest.ProxyCallAsyncCallback) status_sent_respose;
+		Rest.ProxyCallAsyncCallback callback = status_sent_respose;
 		try {
 			call.run_async(callback, this);
 		} catch (GLib.Error e) {

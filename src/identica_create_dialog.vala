@@ -62,7 +62,7 @@ public class CreateDialog : CreateDialogGeneric {
 		acc_info.hide();
 		
 		Rest.Proxy proxy = new Rest.Proxy("http://identi.ca/api/", false);
-		callback = (ProxyCallAsyncCallback) get_response;
+		callback = get_response;
 		
 		call = proxy.new_call();
 		call.set_function("account/verify_credentials.xml");
