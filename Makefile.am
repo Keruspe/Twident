@@ -79,8 +79,6 @@ twident_VALAFLAGS = \
     $(GTK_VALAFLAGS) \
     $(GIO_VALAFLAGS) \
     $(GEE_VALAFLAGS) \
-    $(LIBNOTIFY_VALAFLAGS) \
-    $(LIBSOUP_VALAFLAGS) \
     $(LIBXML_VALAFLAGS) \
     $(REST_VALAFLAGS) \
     $(RESTEXTRAS_VALAFLAGS) \
@@ -94,7 +92,6 @@ twident_CFLAGS = \
     $(GIO_CFLAGS) \
     $(GLIB_CFLAGS) \
     $(GEE_CFLAGS) \
-    $(LIBNOTIFY_CFLAGS) \
     $(LIBSOUP_CFLAGS) \
     $(LIBXML_CFLAGS) \
     $(REST_CFLAGS) \
@@ -120,7 +117,6 @@ twident_LDADD = \
     $(GIO_LIBS) \
     $(GLIB_LIBS) \
     $(GEE_LIBS) \
-    $(LIBNOTIFY_LIBS) \
     $(LIBSOUP_LIBS) \
     $(LIBXML_LIBS) \
     $(REST_LIBS) \
