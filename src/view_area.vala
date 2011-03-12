@@ -4,13 +4,13 @@ using Gee;
 public class ViewArea : VBox {
 	
 	private Accounts accounts;
-	private HashMap<AStream, FeedView> map;
+	private HashMap<AStream, FeedView> feeds;
 	private AStream current_stream;
 	
 	public ViewArea(Accounts accounts) {
 		this.accounts = accounts;
 		
-		map = new HashMap<AStream, FeedView>();
+		feeds = new HashMap<AStream, FeedView>();
 		
 		homogeneous = true;
 		spacing = 0;
@@ -52,9 +52,9 @@ public class ViewArea : VBox {
 	}
 	
 	private void remove_feed_view(AStream stream) {
-		FeedView view = map[stream];
+		FeedView view = feeds[stream];
 		remove(view);
-		map.remove(stream);
+		feeds.unset(stream);
 		
 		if(stream == current_stream)
 			current_stream.dispose();
@@ -65,7 +65,7 @@ public class ViewArea : VBox {
 		
 		view.set_model(stream.model);
 		
-		map[stream] = view;
+		feeds[stream] = view;
 		
 		pack_start(view, true, true, 0);
 		view.hide();
@@ -77,11 +77,11 @@ public class ViewArea : VBox {
 		if(stream == current_stream)
 			return;
 		
-		map[current_stream].hide();
+		feeds[current_stream].hide();
 		current_stream = stream;
 		
 		
-		FeedView view = map[stream];
+		FeedView view = feeds[stream];
 		view.show_all();
 	}
 }

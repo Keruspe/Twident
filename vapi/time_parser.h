@@ -25,4 +25,4 @@
 #include <string.h>
 #include <glib.h>
 
-int time_to_diff(const gchar *datetime, gboolean *atom);
+int time_to_diff(const gchar *datetime, gboolean atom);

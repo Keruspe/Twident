@@ -16,7 +16,6 @@ public class StatusDelegate : EventBox {
 	private Label date;
 	private WrapLabel content;
 	private ReplyLabel re_label;
-	private bool already_expanded = false;
 	private ConversationView? con_view = null;
 	private VBox vb_right;
 	private HBox hb_thumbs;
@@ -24,7 +23,6 @@ public class StatusDelegate : EventBox {
 	private SmartTimer timer;
 	
 	private Gdk.Pixbuf? rt_pixbuf = null;
-	private double MAX_RGB = (double) uint16.MAX;
 	
 	private string date_string = "<small><span foreground='#888'><b>%s</b></span></small>";
 	
@@ -42,18 +40,24 @@ public class StatusDelegate : EventBox {
 	}
 	
 	public StatusDelegate(Status status, AStream stream) {
-		nicks = new Regex("(^|\\s|['\"+&!/\\(-])@([A-Za-z0-9_]+)");
-		tags = new Regex("(^|\\s|['\"+&!/\\(-])#([A-Za-z0-9_.-\\p{Latin}\\p{Greek}]+)");
-		groups = new Regex("(^|\\s|['\"+&!/\\(-])!([A-Za-z0-9_]+)"); //for identi.ca groups
-		urls = new Regex("((https?|ftp)://([A-Za-z0-9+&@#/%?=~_|!:,.;-]*)([A-Za-z0-9+&@#/%=~_|$]))"); // still needs to be improved for urls containing () such as wikipedia's
+		try {
+			nicks = new Regex("(^|\\s|['\"+&!/\\(-])@([A-Za-z0-9_]+)");
+			tags = new Regex("(^|\\s|['\"+&!/\\(-])#([A-Za-z0-9_.-\\p{Latin}\\p{Greek}]+)");
+			groups = new Regex("(^|\\s|['\"+&!/\\(-])!([A-Za-z0-9_]+)"); //for identi.ca groups
+			urls = new Regex("((https?|ftp)://([A-Za-z0-9+&@#/%?=~_|!:,.;-]*)([A-Za-z0-9+&@#/%=~_|$]))"); // still needs to be improved for urls containing () such as wikipedia's
+			
+			twitpic_regex = new Regex("(http://twitpic.com/([a-z0-9]+))");
+			imgly_regex = new Regex("(http://img.ly/([a-z0-9]+))");
+			
+			// characters must be cleared to know direction of text
+			clear_notice = new Regex("[: \n\t\r♻♺]+|@[^ ]+");
 		
-		twitpic_regex = new Regex("(http://twitpic.com/([a-z0-9]+))");
-		imgly_regex = new Regex("(http://img.ly/([a-z0-9]+))");
-		
-		// characters must be cleared to know direction of text
-		clear_notice = new Regex("[: \n\t\r♻♺]+|@[^ ]+");
-		
-		rt_pixbuf = new Gdk.Pixbuf.from_file(Config.RT_PATH);
+			rt_pixbuf = new Gdk.Pixbuf.from_file(Config.RT_PATH);
+		} catch (GLib.RegexError e) {
+			stderr.printf("%s\n", e.message);
+		} catch (GLib.Error e) {
+			stderr.printf("%s\n", e.message);
+		}
 		
 		this.status = status;
 		this.stream = stream;
@@ -296,8 +300,12 @@ public class StatusDelegate : EventBox {
 		
 		default:
 			GLib.Pid pid;
-			GLib.Process.spawn_async(".", {"/usr/bin/xdg-open", prot + "://" + uri}, null,
-				GLib.SpawnFlags.STDOUT_TO_DEV_NULL, null, out pid);
+			try {
+				GLib.Process.spawn_async(".", {"/usr/bin/xdg-open", prot + "://" + uri}, null,
+					GLib.SpawnFlags.STDOUT_TO_DEV_NULL, null, out pid);
+			} catch (GLib.SpawnError e) {
+				stderr.printf("%s\n", e.message);
+			}
 			break;
 		}
 	}
@@ -309,7 +317,7 @@ public class StatusDelegate : EventBox {
 		
 		Context ctx = Gdk.cairo_create(this.window);
 		
-		bool answer = base.expose_event(event);
+		base.expose_event(event);
 		
 		if(rt_pixbuf != null) {
 			Gdk.Rectangle big_rect = {0, 0 , 48, 48};
@@ -375,7 +383,12 @@ public class StatusDelegate : EventBox {
 		while(true) {
 			//url cutting
 			MatchInfo match_info;
-			bool bingo = urls.match_all_full(tmp, -1, pos, GLib.RegexMatchFlags.NEWLINE_ANY, out match_info);
+			bool bingo = false;
+			try {
+				bingo = urls.match_all_full(tmp, -1, pos, GLib.RegexMatchFlags.NEWLINE_ANY, out match_info);
+			} catch (GLib.RegexError e) {
+				stderr.printf("%s\n", e.message);
+			}
 			if(bingo) {
 				foreach(string s in match_info.fetch_all()) {
 					if(s.length > 30) {
@@ -389,14 +402,14 @@ public class StatusDelegate : EventBox {
 				}
 			} else break;
 		}
-		debug(visual_style.fg_color);
-		data = nicks.replace(data, -1, 0, "\\1<b><a href='userinfo://\\2'><span foreground='=fg-color='>@\\2</span></a></b>");
-		debug(data);
-		//data.printf("foreground='#ccc'");
-		data = tags.replace(data, -1, 0, "\\1<b><a href='search://\\2'>#\\2</a></b>");
-		
-		data = groups.replace(data, -1, 0, "\\1<b>!<a href='group://\\2'>\\2</a></b>");
-		data = data.replace("=fg-color=", visual_style.fg_color);
+		try {
+			data = nicks.replace(data, -1, 0, "\\1<b><a href='userinfo://\\2'><span foreground='=fg-color='>@\\2</span></a></b>");
+			data = tags.replace(data, -1, 0, "\\1<b><a href='search://\\2'>#\\2</a></b>");
+			data = groups.replace(data, -1, 0, "\\1<b>!<a href='group://\\2'>\\2</a></b>");
+			data = data.replace("=fg-color=", visual_style.fg_color);
+		} catch (GLib.RegexError e) {
+			stderr.printf("%s\n", e.message);
+		}
 		return data;
 	}
 	
@@ -419,7 +432,12 @@ public class StatusDelegate : EventBox {
 		int pos = 0;
 		while(true) {
 			MatchInfo match_info;
-			bool bingo = regex.match_all_full(text, -1, pos, GLib.RegexMatchFlags.NEWLINE_ANY, out match_info);
+			bool bingo = false;
+			try {
+				bingo = regex.match_all_full(text, -1, pos, GLib.RegexMatchFlags.NEWLINE_ANY, out match_info);
+			} catch (GLib.RegexError e) {
+				stderr.printf("%s\n", e.message);
+			}
 			if(bingo) {
 				foreach(string s in match_info.fetch_all()) {
 					switch(hosting_type) {

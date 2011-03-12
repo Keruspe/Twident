@@ -31,8 +31,8 @@ namespace TimeUtils {
 		int xdelta = 0;
  		string sdelta = t.format("%z");
  		
- 		xdelta += sdelta.substring(1, 2).to_int()*3600;
-		xdelta += sdelta.substring(3, 2).to_int()*60;
+ 		xdelta += int.parse(sdelta.substring(1, 2))*3600;
+		xdelta += int.parse(sdelta.substring(3, 2))*60;
 		
 		if(sdelta[0]=='-')
 			xdelta *= -1;

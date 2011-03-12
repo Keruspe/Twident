@@ -199,7 +199,7 @@ public class IconWithStatusCellRrenderer : CellRenderer {
 			double text_height = ex.height;
 			
 			var layout = new Pango.Layout(widget.get_pango_context());
-			layout.set_text(_text, (int) _text.size());
+			layout.set_text(_text, (int) _text.length);
 			//layout.set_wrap(Pango.WrapMode.CHAR);
 			//layout.set_ellipsize(Pango.EllipsizeMode.END);
 			//int t_w = 0;

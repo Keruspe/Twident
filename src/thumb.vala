@@ -18,8 +18,12 @@ public class Thumb : EventBoxTr {
 	
 	private bool on_click(Gdk.EventButton event) {
 		GLib.Pid pid;
-		GLib.Process.spawn_async(".", {"/usr/bin/xdg-open", full_url},
-			null, GLib.SpawnFlags.STDOUT_TO_DEV_NULL, null, out pid);
+		try {
+			GLib.Process.spawn_async(".", {"/usr/bin/xdg-open", full_url},
+				null, GLib.SpawnFlags.STDOUT_TO_DEV_NULL, null, out pid);
+		} catch (GLib.SpawnError e) {
+			stderr.printf("%s\n", e.message);
+		}
 		
 		return true;
 	}

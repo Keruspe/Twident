@@ -27,7 +27,7 @@ public class VisualStyle : GLib.Object {
 		bg_light_color = rgb_to_hex(style.light[Gtk.StateType.NORMAL]);
 		fg_color = rgb_to_hex(style.fg[Gtk.StateType.NORMAL]);
 		
-		Value? v = new Value(typeof(Gdk.Color));
+		Value? v = Value(typeof(Gdk.Color));
 		if(v != null) {
 			lk_color = rgb_to_hex((Gdk.Color) v);
 			debug(lk_color);

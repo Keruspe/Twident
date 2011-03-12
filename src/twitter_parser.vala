@@ -11,7 +11,7 @@ public class Parser : GLib.Object {
 		ArrayList<Status> lst = new ArrayList<Status>();
 		
 		XmlParser parser = new XmlParser();
-		XmlNode root = parser.parse_from_data(data, (int64) data.size());
+		XmlNode root = parser.parse_from_data(data, (int64) data.length);
 		
 		if(root.children == null && root.children.size() < 1)
 			return lst;
@@ -31,7 +31,7 @@ public class Parser : GLib.Object {
 	
 	public static Status? get_status_from_string(string data, string own_name) {
 		XmlParser parser = new XmlParser();
-		XmlNode root = parser.parse_from_data(data, (int64) data.size());
+		XmlNode root = parser.parse_from_data(data, (int64) data.length);
 		
 		XmlNode? status_node = (XmlNode) root;//.get_values().nth_data(0);
 		
@@ -99,7 +99,7 @@ public class Parser : GLib.Object {
 	
 	public static User? get_single_user(string data) {
 		XmlParser parser = new XmlParser();
-		XmlNode root = parser.parse_from_data(data, (int64) data.size());
+		XmlNode root = parser.parse_from_data(data, (int64) data.length);
 		
 		User user = new User();
 		get_user(root, user, "");
@@ -136,7 +136,7 @@ public class Parser : GLib.Object {
 	
 	public static ArrayList<Status> get_search(string data, string own_name) {
 		ArrayList<Status> lst = new ArrayList<Status>();
-		Xml.Doc* xml_doc = Xml.Parser.parse_memory(data, (int) data.size());
+		Xml.Doc* xml_doc = Xml.Parser.parse_memory(data, (int) data.length);
 		Xml.Node* root_node = xml_doc->get_root_element();
 		
 		Xml.Node* iter;
@@ -159,7 +159,12 @@ public class Parser : GLib.Object {
 	public static Status get_search_status(Xml.Node* node, string own_name) {
 		Status status = new Status();
 		
-		Regex nick_re = new Regex("(.*) \\((.*)\\)");
+		Regex? nick_re = null;
+		try {
+			nick_re = new Regex("(.*) \\((.*)\\)");
+		} catch (GLib.RegexError e) {
+			stderr.printf("%s\n", e.message);
+		}
 		
 		Xml.Node* iter;
 		for(iter = node->children->next; iter != null; iter = iter->next) {
@@ -189,6 +194,7 @@ public class Parser : GLib.Object {
 				break;
 			
 			case "author":
+				if (nick_re == null) break;
 				Xml.Node* iter_a;
 				
 				for(iter_a = iter->children->next; iter_a != null; iter_a = iter_a->next) {

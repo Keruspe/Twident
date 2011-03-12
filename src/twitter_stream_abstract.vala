@@ -11,8 +11,6 @@ public abstract class StreamAbstract : AStream {
 	//protected string auth_header;
 	protected Rest.ProxyCall call;
 	
-	private unowned GLib.Thread thread;
-	
 	protected abstract string func {get; set;}
 	
 	protected virtual void set_call_params(bool more = false) {}
@@ -56,12 +54,16 @@ public abstract class StreamAbstract : AStream {
 		Rest.ProxyCallAsyncCallback callback;
 		
 		if(more)
-			callback = get_more_response;
+			callback = (ProxyCallAsyncCallback) get_more_response;
 		else
-			callback = get_response;
+			callback = (ProxyCallAsyncCallback) get_response;
 		
 		set_call_params(more);
-		call.run_async(callback, this);
+		try {
+			call.run_async(callback, this);
+		} catch (GLib.Error e) {
+			stderr.printf("%s\n", e.message);
+		}
 	}
 	
 	public void get_response(Rest.ProxyCall call, Error? error, Object? obj) {

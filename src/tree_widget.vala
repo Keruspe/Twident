@@ -5,7 +5,7 @@ public class TreeWidget : TreeView {
 	
 	public signal void cursor_moved(AStream stream);
 	
-	private Window parent;
+	private Window parent_win;
 	private Accounts accounts;
 
 	private TreeStore store;
@@ -15,11 +15,15 @@ public class TreeWidget : TreeView {
 	
 	public Frame frame;
 	
-	public TreeWidget(Window parent, Accounts accounts) {
-		this.parent = parent;
+	public TreeWidget(Window parent_win, Accounts accounts) {
+		this.parent_win = parent_win;
 		this.accounts = accounts;
 
-		pix_updating = new Gdk.Pixbuf.from_file(Config.UPDATING_PATH);
+		try {
+			pix_updating = new Gdk.Pixbuf.from_file(Config.UPDATING_PATH);
+		} catch (GLib.Error e) {
+			stderr.printf("%s\n", e.message);
+		}
 		
 		accounts.insert_new_account.connect(new_account);
 		accounts.insert_new_stream_after.connect((after_path, stream) => {
@@ -110,13 +114,11 @@ public class TreeWidget : TreeView {
 		debug(path.to_string());
 
 		if(path.get_depth() == 2) { //stream
-			int account_index = path.to_string().split(":")[0].to_int();
-			int stream_index = path.to_string().split(":")[1].to_int();
+			int account_index = int.parse(path.to_string().split(":")[0]);
+			int stream_index = int.parse(path.to_string().split(":")[1]);
 			
 			AAccount active_account = accounts.get(account_index);
 			AStream active_stream = active_account.streams.get(stream_index);
-			
-			string hash = active_account.get_stream_hash(active_stream);
 
 			cursor_moved(active_stream);
 		}
@@ -130,7 +132,7 @@ public class TreeWidget : TreeView {
 		get_cursor(out path, out column);
 		string spath = path.to_string().split(":")[0];
 		
-		return accounts.get(spath.to_int());
+		return accounts.get(int.parse(spath));
 	}
 
 	/** Get current stream index */
@@ -144,7 +146,7 @@ public class TreeWidget : TreeView {
 		
 		string spath = path.to_string().split(":")[1];
 		
-		return spath.to_int();
+		return int.parse(spath);
 	}
 	
 	/** Context menu for accounts and streams */
@@ -187,7 +189,7 @@ public class TreeWidget : TreeView {
 				MenuItem? menu_item = item2menu(item);
 				
 				menu_item.activate.connect(() => {
-					accounts.actions_tracker(account, aitem, parent);
+					accounts.actions_tracker(account, aitem, parent_win);
 				});
 				
 				if(menu_item != null)

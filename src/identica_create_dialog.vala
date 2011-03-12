@@ -19,8 +19,6 @@ public class CreateDialog : CreateDialogGeneric {
 	
 	public User user;
 	
-	private weak Thread thread = null;
-	
 	public CreateDialog(Window parent) {
 		base(parent, _("Link with Identica account"),  Config.SERVICE_IDENTICA_ICON);
 		
@@ -30,7 +28,7 @@ public class CreateDialog : CreateDialogGeneric {
 		check_btn = new Button();
 		
 		HBox pbox = new HBox(false, 0);
-		Image cimg = new Image.from_stock(Gtk.STOCK_DIALOG_AUTHENTICATION,
+		Image cimg = new Image.from_stock(Gtk.Stock.DIALOG_AUTHENTICATION,
 			IconSize.MENU);
 		Label check_label = new Label("");
 		check_label.set_markup(_("<i>%s</i>".printf("Verify credentials")));
@@ -64,7 +62,7 @@ public class CreateDialog : CreateDialogGeneric {
 		acc_info.hide();
 		
 		Rest.Proxy proxy = new Rest.Proxy("http://identi.ca/api/", false);
-		callback = get_response;
+		callback = (ProxyCallAsyncCallback) get_response;
 		
 		call = proxy.new_call();
 		call.set_function("account/verify_credentials.xml");
@@ -81,7 +79,11 @@ public class CreateDialog : CreateDialogGeneric {
 		call.remove_header("Authorization");
 		call.add_header("Authorization", "Basic %s".printf(http_auth));
 		
-		call.run_async(callback, this);
+		try {
+			call.run_async(callback, this);
+		} catch (GLib.Error e) {
+			stderr.printf("%s\n", e.message);
+		}
 	}
 	
 	private void get_response() {
@@ -116,19 +118,6 @@ public class CreateDialog : CreateDialogGeneric {
 		debug("%s, %s", user.name, user.pic);
 		
 		ok_btn.set_sensitive(true);
-	}
-	
-	private void* load_userpic() {
-		string? path = img_cache.download(user.pic);
-		if(path == null)
-			return null;
-		
-		Idle.add(() => {
-			acc_img.set_from_file(path);
-			return false;
-		});
-		
-		return null;
 	}
 }
 

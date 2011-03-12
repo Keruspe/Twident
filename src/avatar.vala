@@ -8,7 +8,6 @@ public class Avatar : Image {
 	public int pix_size {get; set; default = 1;}
 	
 	private const double M_PI = 3.1415926535;
-	private double MAX_RGB = (double) uint16.MAX;
 	
 	private unowned Thread<void*>? thread = null;
 	
@@ -81,15 +80,6 @@ public class Avatar : Image {
 		ctx.close_path();
 	}
 	
-	private void set_color(Context ctx, Gdk.Color color) {
-		//get rgb
-		double r = (double) color.red / MAX_RGB;
-		double g = (double) color.green / MAX_RGB;
-		double b = (double) color.blue / MAX_RGB;
-		
-		ctx.set_source_rgb(r, g, b);
-	}
-	
 	private void redraw() {
 		if (null == this.window)
 			return;
@@ -115,11 +105,7 @@ public class Avatar : Image {
 			
 			Idle.add(() => {
 				thread.join();
-				try {
-					this.set_file_name(img_path);
-				} catch(GLib.Error e) {
-					debug(e.message); //TODO
-				}
+				this.set_file_name(img_path);
 				return false;
 			});
 		}

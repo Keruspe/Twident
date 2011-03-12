@@ -31,7 +31,11 @@ public class ImgCache : Object {
 	
 	private void load_pix(string path) {
 		if(!map.has_key(path)) {
-			map[path] = new Gdk.Pixbuf.from_file(path);
+			try {
+				map[path] = new Gdk.Pixbuf.from_file(path);
+			} catch (GLib.Error e) {
+				stderr.printf("%s\n", e.message);
+			}
 		}
 		
 		/*
@@ -98,7 +102,7 @@ public class ImgCache : Object {
 	
 	private string encode_url(string url) throws GLib.RegexError {
 		string old_url_path = url_re.replace(url, -1, 0, "\\3");
-		string new_url_path = Soup.form_encode("", old_url_path).split("=")[1];
+		string new_url_path = Form.encode("", old_url_path).split("=")[1];
 		new_url_path = url.replace(old_url_path, new_url_path);
 	
 		new_url_path = new_url_path.replace("%2F", "/");

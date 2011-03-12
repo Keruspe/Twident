@@ -35,7 +35,7 @@ public class CreateDialog : CreateDialogGeneric {
 			root_url, false);
 		
 		auth_btn = new Button();
-		Image timg = new Image.from_stock(Gtk.STOCK_DIALOG_AUTHENTICATION,
+		Image timg = new Image.from_stock(Gtk.Stock.DIALOG_AUTHENTICATION,
 			IconSize.MENU);
 		Label tlabel = new Label(null);
 		tlabel.set_markup("<i>%s</i>".printf(_("Authenticate in %s").printf(service_name)));
@@ -191,7 +191,7 @@ public class CreateDialog : CreateDialogGeneric {
 		
 		Rest.XmlParser parser = new Rest.XmlParser();
 		Rest.XmlNode root = parser.parse_from_data(call.get_payload(),
-			(int64) call.get_payload().size());
+			(int64) call.get_payload().length);
 		
 		foreach(var val in root.children.get_values()) {
 			Rest.XmlNode node = (Rest.XmlNode) val;

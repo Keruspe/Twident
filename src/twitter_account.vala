@@ -246,7 +246,7 @@ public class Account : AAccount {
 	
 	protected void load_userpic_thread() {
 		try {
-			unowned Thread<void*> thread = Thread.create<void*>(load_userpic, true);
+			Thread.create<void*>(load_userpic, true);
 		} catch(GLib.Error e) {
 			debug(e.message); //TODO
 		}
@@ -285,8 +285,12 @@ public class Account : AAccount {
 		call.set_function("statuses/update.xml");
 		call.set_method("POST");
 		
-		Rest.ProxyCallAsyncCallback callback = status_sent_respose;
-		call.run_async(callback, this);
+		Rest.ProxyCallAsyncCallback callback = (Rest.ProxyCallAsyncCallback) status_sent_respose;
+		try {
+			call.run_async(callback, this);
+		} catch (GLib.Error e) {
+			stderr.printf("%s\n", e.message);
+		}
 	}
 	
 	protected void status_sent_respose(Rest.ProxyCall call, Error? error, Object? obj) {
@@ -333,7 +337,11 @@ public class Account : AAccount {
 			stop_indicate(); //signal
 		});
 		
-		call.run_async(callback, this);
+		try {
+			call.run_async(callback, this);
+		} catch (GLib.Error e) {
+			stderr.printf("%s\n", e.message);
+		}
 	}
 	
 	protected override void menu_do_retweet(Status status) {
@@ -352,7 +360,11 @@ public class Account : AAccount {
 			stop_indicate(); //signal
 		});
 		
-		call.run_async(callback, this);
+		try {
+			call.run_async(callback, this);
+		} catch (GLib.Error e) {
+			stderr.printf("%s\n", e.message);
+		}
 	}
 	
 	protected override void menu_do_remove(Status status) {
@@ -379,7 +391,11 @@ public class Account : AAccount {
 			stop_indicate(); //signal
 		});
 		
-		call.run_async(callback, this);
+		try {
+			call.run_async(callback, this);
+		} catch (GLib.Error e) {
+			stderr.printf("%s\n", e.message);
+		}
 	}
 	
 	protected override void menu_do_reply(Status status) {

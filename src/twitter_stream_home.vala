@@ -59,7 +59,7 @@ public class StreamHome : Twitter.StreamAbstract {
 		
 		if(s_last_id == 0) {
 			model.add_all(result_lst);
-			s_last_id = model.get(0).id.to_int64();
+			s_last_id = int64.parse(model.get(0).id);
 			
 			return;
 		}
@@ -75,7 +75,7 @@ public class StreamHome : Twitter.StreamAbstract {
 		//getting fresh statuses
 		model.add_all(result_lst);
 		
-		s_last_id = model.get(0).id.to_int64();
+		s_last_id = int64.parse(model.get(0).id);
 		
 		/*
 		int own_statuses = 0;

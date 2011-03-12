@@ -113,15 +113,15 @@ public class Accounts : ArrayList<AAccount> {
 		
 		switch(t.name()) {
 		case "gint":
-			v.set_int(data.to_int());
+			v.set_int(int.parse(data));
 			break;
 		
 		case "gdouble":
-			v.set_double(data.to_double());
+			v.set_double(double.parse(data));
 			break;
 		
 		case "gboolean":
-			v.set_boolean(data.to_bool());
+			v.set_boolean(bool.parse(data));
 			break;
 		
 		case "gchararray":
@@ -129,7 +129,7 @@ public class Accounts : ArrayList<AAccount> {
 			break;
 		
 		case "TwidentEnumsStreamEnum":
-			v.set_enum(data.to_int());
+			v.set_enum(int.parse(data));
 			break;
 		
 		default:
@@ -201,7 +201,7 @@ public class Accounts : ArrayList<AAccount> {
 	
 	/** Restore accounts and streams from xml */
 	public void from_xml(string data) {
-		Doc* xml_doc = Parser.parse_memory(data, (int) data.size());
+		Doc* xml_doc = Parser.parse_memory(data, (int) data.length);
 		Xml.Node* root_node = xml_doc->get_root_element();
 		
 		if(root_node == null)
@@ -244,7 +244,7 @@ public class Accounts : ArrayList<AAccount> {
 							stream_map.set(iter_stream->name, iter_stream->get_content());
 						}
 						
-						account.add_stream((StreamEnum) stream_type.to_int(),
+						account.add_stream((StreamEnum) int.parse(stream_type),
 							false, stream_map);
 					}
 					break;
