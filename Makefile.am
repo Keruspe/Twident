@@ -9,7 +9,7 @@ EXTRA_DIST = autogen.bash NEWS README
 
 bin_PROGRAMS = twident
 
-twident_SOURCES = \
+base_twident_SOURCES = \
     src/time_utils.vala \
     src/create_dialog_generic.vala \
     src/identica_create_dialog.vala \
@@ -63,9 +63,15 @@ twident_SOURCES = \
     src/account_abstract.vala \
     src/identica_account.vala \
     src/twitter_stream_search.vala \
-    src/globals.vala \
+    src/globals.vala
+
+extra_twident_SOURCES = \
     vapi/time_parser.c \
     vapi/img_cache_saver.c
+
+twident_SOURCES = \
+    $(base_twident_SOURCES) \
+    $(extra_twident_SOURCES)
 
 twident_VALAFLAGS = \
     --thread \
@@ -107,7 +113,7 @@ twident_CFLAGS = \
     $(CFLAGS)
 
 CLEANFILES += \
-	${twident_SOURCES:.vala=.c}
+	${base_twident_SOURCES:.vala=.c}
 
 twident_LDADD = \
     $(GTK_LIBS) \
