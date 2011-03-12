@@ -1,4 +1,5 @@
 *.c
+*.o
 !vapi/*.c
 .aux
 .deps
@@ -14,4 +15,5 @@ configure
 m4
 stamp-h1
 *.stamp
+twident
 

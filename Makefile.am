@@ -81,6 +81,8 @@ twident_VALAFLAGS = \
     --pkg=config \
     --pkg=posix
 
+imgdir = ${datadir}/twident/icons
+
 twident_CFLAGS = \
     $(GTK_CFLAGS) \
     $(GIO_CFLAGS) \
@@ -92,7 +94,16 @@ twident_CFLAGS = \
     $(REST_CFLAGS) \
     $(RESTEXTRAS_CFLAGS) \
     --include config.h \
+    -I vapi \
     -DLOCALEDIR=\"${localedir}\" \
+    -DMENTIONS_PATH=\"${imgdir}/mentions.svg\" \
+    -DGROUP_PATH=\"${imgdir}/group.svg\" \
+    -DRT_PATH=\"${imgdir}/rt.png\" \
+    -DCONVERSATION_PATH=\"${imgdir}/conversation.png\" \
+    -DSERVICE_TWITTER_ICON=\"${imgdir}/service-twitter.png\" \
+    -DSERVICE_IDENTICA_ICON=\"${imgdir}/service-identica.png\" \
+    -DUPDATING_PATH=\"${imgdir}/updating.png\" \
+    -DRETWEET_PATH=\"${imgdir}/retweet.svg\" \
     $(CFLAGS)
 
 CLEANFILES += \
@@ -109,7 +120,6 @@ twident_LDADD = \
     $(REST_LIBS) \
     $(RESTEXTRAS_LIBS)
 
-imgdir = ${datadir}/twident/icons
 img_DATA = \
     img/delete_status.png \
     img/direct_fresh.svg \
