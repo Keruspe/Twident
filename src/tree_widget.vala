@@ -10,8 +10,7 @@ public class TreeWidget : TreeView {
 
 	private TreeStore store;
 	public TreePath current_tree_path;
-	
-	private Gdk.Pixbuf pix_account;
+
 	private Gdk.Pixbuf pix_updating;
 	
 	public Frame frame;
@@ -19,13 +18,8 @@ public class TreeWidget : TreeView {
 	public TreeWidget(Window parent, Accounts accounts) {
 		this.parent = parent;
 		this.accounts = accounts;
-		
-		try {
-			pix_account = new Gdk.Pixbuf.from_file("/usr/share/icons/Humanity/places/24/folder-videos.svg");
-			pix_updating = new Gdk.Pixbuf.from_file(Config.UPDATING_PATH);
-		} catch(GLib.Error e) {
-			debug(e.message);
-		}
+
+		pix_updating = new Gdk.Pixbuf.from_file(Config.UPDATING_PATH);
 		
 		accounts.insert_new_account.connect(new_account);
 		accounts.insert_new_stream_after.connect((after_path, stream) => {
@@ -262,8 +256,6 @@ public class TreeWidget : TreeView {
 	
 	private void new_account_general(TreeIter iter, AAccount account) {
 		Gdk.Pixbuf? acc_icon = account.userpic;
-		if(acc_icon == null)
-			acc_icon = pix_account;
 		
 		MetaRow meta_icon = new MetaRow(acc_icon,
 			accounts_types.get(account.get_type()).icon,
