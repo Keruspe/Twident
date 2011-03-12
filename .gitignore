@@ -1,2 +1,20 @@
 *~
+*.c
+*.o
+!vapi/*.c
+.aux
+.deps
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache
+config.h
+config.h.in
+config.log
+config.status
+configure
+m4
+stamp-h1
+*.stamp
+twident
 

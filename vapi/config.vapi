@@ -22,37 +22,15 @@
 [CCode (cprefix = "", lower_case_cprefix = "", cheader_filename = "config.h")]
 namespace Config
 {
-	public const string GETTEXT_PACKAGE;
 	public const string APPNAME;
-	public const string LOCALE_DIR;
-	public const string APP_VERSION;
-	public const string LOGO_PATH;
-	public const string LOGO_FRESH_PATH;
 	public const string MENTIONS_PATH;
 	public const string GROUP_PATH;
-	public const string MENTIONS_FRESH_PATH;
-	public const string TIMELINE_PATH;
-	public const string TIMELINE_FRESH_PATH;
-	public const string PUBLIC_TIMELINE_ICON;
-	public const string DIRECT_PATH;
-	public const string DIRECT_FRESH_PATH;
 	public const string RT_PATH;
 	public const string CONVERSATION_PATH;
-	//public const string FAVORITE_PATH;
-	//public const string FAVORITE_NO_PATH;
 	public const string SERVICE_TWITTER_ICON;
 	public const string SERVICE_IDENTICA_ICON;
-	//public const string FAVORITE_MENU_PATH;
 	public const string UPDATING_PATH;
-	public const string DIRECT_REPLY_PATH;
-	public const string REPLY_PATH;
 	public const string RETWEET_PATH;
-	public const string DELETE_PATH;
-	public const string USERPIC_PATH;
-	public const string TEMPLATES_PATH;
-	
-	public const string CONS_KEY;
-	public const string CONS_SEC;
 }
 
 [CCode (cprefix = "", lower_case_cprefix = "", cheader_filename = "")]
@@ -60,31 +38,6 @@ namespace Soppa // Soppa is Swedish for Soup ;)
 {
 	[CCode (cname = "save_soup_data")]
 	public bool save_soup_data(Soup.MessageBody data, string file);
-}
-
-namespace Gtk
-{
-  [CCode (cprefix = "GTKSPELL_ERROR_", cheader_filename = "gtkspell/gtkspell.h")]
-  public errordomain SpeelError
-  {
-    ERROR_BACKEND
-  }
-
-  [Compact]
-  [CCode (cheader_filename = "gtkspell/gtkspell.h", free_function = "")]
-  public class Spell
-  {
-    [CCode (cname = "gtkspell_new_attach")]
-    public Spell.attach (TextView view, string? lang) throws GLib.Error;
-    [CCode (cname = "gtkspell_get_from_text_view")]
-    public static Spell get_from_text_view (TextView view);
-    [CCode (cname = "gtkspell_detach")]
-    public void detach ();
-    [CCode (cname = "gtkspell_set_language")]
-    public bool set_language (string lang) throws GLib.Error;
-    [CCode (cname = "gtkspell_recheck_all")]
-    public void recheck_all ();
-  }
 }
 
 [CCode (cheader_filename = "time_parser.h")]

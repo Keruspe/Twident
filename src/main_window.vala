@@ -7,7 +7,6 @@ public class MainWindow : Window {
 
 	//GUI
 	private Widget menubar;
-	public MenuIndicator indicator;
 	private TreeWidget tree;
 	//private ContentView content_view;
 	private ViewArea view_area;
@@ -23,17 +22,6 @@ public class MainWindow : Window {
 		tree = new TreeWidget(this, accounts);
 		
 		menu_setup();
-		
-		indicator = new MenuIndicator(this);
-		
-		accounts.message_indicate.connect((msg) => {
-			indicator.add_queue(msg);
-		});
-		accounts.stop_indicate.connect(() => {
-			indicator.hide_queue();
-		});
-		
-		((MenuBar) menubar).append(indicator);
 		
 		var vbox = new VBox(false, 0);
 		vbox.pack_start(tree.frame, true, true, 0);
@@ -79,7 +67,6 @@ public class MainWindow : Window {
 		show_all();
 		
 		//hide some widgets
-		indicator.hide();
 		view_area.generate_views();
 		
 		signals_setup();
