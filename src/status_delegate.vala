@@ -364,19 +364,7 @@ public class StatusDelegate : EventBox {
 		return TimeUtils.str_to_time(created).format("%k:%M %b %d %Y");
 	}
 	
-	/** Performaing to show in markup context */
-	private string strip_tags_plus(owned string content) {
-		//content = content.replace("\\", "&#92;");
-		content = Markup.escape_text(content);
-		//content = content.replace("<", "&lt;");
-		//content = content.replace(">", "&gt;");
-		
-		return content;
-	}
-	
 	private string format_content(owned string data) {
-		data = strip_tags_plus(data);
-		
 		string tmp = data;
 		
 		int pos = 0;
