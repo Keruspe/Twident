@@ -26,14 +26,13 @@ public class UpdatesCellRrenderer : CellRenderer {
 		return;
 	}
   
-	public override void render(Gdk.Window window, Gtk.Widget widget,
+	public override void render(Cairo.Context ctx, Gtk.Widget widget,
 		Gdk.Rectangle background_area, Gdk.Rectangle cell_area,
-		Gdk.Rectangle expose_area, Gtk.CellRendererState flags) {
+		Gtk.CellRendererState flags) {
 		
 		if(text.length == 0 || text == "0")
 			return;
 		
-		Context ctx = Gdk.cairo_create(window);
 		ctx.set_line_width(2);
 		
 		Style style = rc_get_style(widget);

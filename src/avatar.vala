@@ -84,7 +84,7 @@ public class Avatar : Image {
 		if (null == this.window)
 			return;
 
-		unowned Gdk.Region region = this.window.get_clip_region();
+		unowned Cairo.Region region = this.window.get_clip_region();
 		this.window.invalidate_region(region, true);
 		this.window.process_updates(true);
     }

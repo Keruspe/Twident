@@ -55,9 +55,6 @@ public class CreateDialog : CreateDialogGeneric {
 		auth_table.add_widget_wide(check_btn);
 		auth_table.add_widget_wide(acc_info);
 		
-		vbox.pack_start(auth_table, false, false, 5);
-		vbox.show_all();
-		
 		cprogress.hide();
 		acc_info.hide();
 		
