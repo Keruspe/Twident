@@ -31,6 +31,8 @@ namespace Config
 	public const string SERVICE_IDENTICA_ICON;
 	public const string UPDATING_PATH;
 	public const string RETWEET_PATH;
+	public const string GETTEXT_PACKAGE;
+	public const string LOCALEDIR;
 }
 
 [CCode (cprefix = "", lower_case_cprefix = "", cheader_filename = "")]

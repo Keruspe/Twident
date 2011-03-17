@@ -404,7 +404,7 @@ public class Accounts : ArrayList<AAccount> {
 		case MenuItems.REMOVE:
 			Gtk.MessageDialog dlg = new Gtk.MessageDialog(parent, Gtk.DialogFlags.MODAL,
 				Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
-				_("Do you realy want to remove this account?"));
+				"%s", _("Do you realy want to remove this account?"));
 			
 			int result = dlg.run();
 			dlg.close();

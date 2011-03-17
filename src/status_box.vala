@@ -63,7 +63,7 @@ public class StatusBox : TextView {
 				var message_dialog = new MessageDialog(parentWindow,
 				Gtk.DialogFlags.DESTROY_WITH_PARENT | Gtk.DialogFlags.MODAL,
 				Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
-				(_("Type something first")));
+				"%s", (_("Type something first")));
 				
 				message_dialog.run();
 				message_dialog.destroy();
@@ -96,7 +96,7 @@ public class StatusBox : TextView {
 		if(settings.selected_for_posting.size < 1) {
 			Gtk.MessageDialog dlg = new Gtk.MessageDialog(parentWindow, Gtk.DialogFlags.MODAL,
 				Gtk.MessageType.INFO, Gtk.ButtonsType.OK,
-				_("You need to choose some accounts for sending statuses"));
+				"%s", _("You need to choose some accounts for sending statuses"));
 			
 			dlg.run();
 			dlg.close();
