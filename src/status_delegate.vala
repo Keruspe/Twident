@@ -365,6 +365,8 @@ public class StatusDelegate : EventBox {
 	}
 	
 	private string format_content(owned string data) {
+		data = data.replace("&", "&amp;");
+
 		string tmp = data;
 		
 		int pos = 0;
