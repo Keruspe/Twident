@@ -30,7 +30,6 @@ public class StreamHome : Twitter.StreamAbstract {
 	protected ParsingDelegate? parsing_delegate = null;
 	
 	construct {
-		debug("twitter home stream was created");
 		
 		parsing_delegate = Parser.get_timeline;
 	}
@@ -86,7 +85,6 @@ public class StreamHome : Twitter.StreamAbstract {
 		
 		fresh_items = statuses_fresh.size - own_statuses;
 		*/
-		debug("What we got: %d", result_lst.size);
 	}
 	
 	protected override void parse_more_stream(string data) {
@@ -112,7 +110,6 @@ public class StreamHome : Twitter.StreamAbstract {
 	}
 	
 	public override void menu_more() {
-		debug("more");
 		sync(true);
 	}
 }

@@ -66,7 +66,6 @@ public static int main (string[] args) {
 		streams_types = new StreamsTypes();
 		settings = new Settings();
 	} catch(GLib.Error e) {
-		debug(e.message); //TODO
 	}
 	
 	//TestWindow w = new TestWindow();
@@ -79,7 +78,6 @@ public static int main (string[] args) {
 	
 	FacebookProxy proxy = new FacebookProxy(api_key, app_secret);
 	string session_key = FacebookProxy.get_session_key(proxy);
-	debug(session_key);
 	FacebookProxy.set_session_key(proxy, session_key);
 	FacebookProxyCall call = (FacebookProxyCall) proxy.new_call();
 	return 0;
@@ -91,8 +89,6 @@ public static int main (string[] args) {
 
 public void some_case(string? path) {
 	if(path == null) {
-		debug("null");
 		return;
 	}
-	debug(path);
 }

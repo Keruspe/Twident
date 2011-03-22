@@ -99,7 +99,6 @@ public class StatusChooseBar : Toolbar {
 	}
 	
 	private void add_new_account(AAccount account) {
-		debug(account.s_name);
 		ToggleToolButton tb = new ToggleToolButton();
 		tb.label = account.get_hash();
 		tb.set_tooltip_text("%s (%s)".printf(account.s_name, account.id));
@@ -108,7 +107,6 @@ public class StatusChooseBar : Toolbar {
 			tb.set_active(true);
 		
 		account.notify["userpic"].connect((s) => {
-			debug("userpic is loaded");
 			Image img = new Image.from_pixbuf(account.userpic.scale_simple(
 				24, 24, Gdk.InterpType.HYPER));
 			img.show();
@@ -121,7 +119,6 @@ public class StatusChooseBar : Toolbar {
 		
 		/*
 		if(account.userpic != null) {
-			debug("userpic is ok");
 			Image img = new Image.from_pixbuf(account.userpic);
 			img.pixel_size = 48;
 			tb.set_icon_widget(img);

@@ -34,7 +34,6 @@ public class Accounts : ArrayList<AAccount> {
 			try {
 				dir.make_directory(null);
 			} catch(GLib.Error e) {
-				debug(e.message); //TODO
 			}
 		}
 		
@@ -48,7 +47,6 @@ public class Accounts : ArrayList<AAccount> {
 			try {
 				fstream = acc_file.read(null);
 			} catch(GLib.Error e) {
-				debug(e.message); //TODO
 				return;
 			}
 			DataInputStream stream = new DataInputStream(fstream);
@@ -57,7 +55,6 @@ public class Accounts : ArrayList<AAccount> {
 			try {
 				data = stream.read_until("", null, null);
 			} catch(GLib.Error e) {
-				debug(e.message); //TODO
 				return;
 			}
 			from_xml(data);
@@ -71,7 +68,6 @@ public class Accounts : ArrayList<AAccount> {
 		try {
 			stream = file.replace(null, false, FileCreateFlags.NONE, null);
 		} catch(GLib.Error e) {
-			debug(e.message); //TODO
 			return;
 		}
 		
@@ -80,7 +76,6 @@ public class Accounts : ArrayList<AAccount> {
 		try {
 			data_stream.put_string(to_xml(), null);
 		} catch(GLib.Error e) {
-			debug(e.message); //TODO
 		}
 	}
 	
@@ -152,7 +147,6 @@ public class Accounts : ArrayList<AAccount> {
 			string account_props = "";
 			
 			foreach(var p in obj.list_properties()) {
-				//debug("%s, %s", p.value_type.name(), p.get_name());
 				
 				if(p.get_name().substring(0, 2) != "s-") //we need only s-* properties
 					continue;
@@ -192,7 +186,6 @@ public class Accounts : ArrayList<AAccount> {
 			
 			account_props += streams_result.printf(streams_str);
 			
-			//debug(streams_str);
 			istr += account_str.printf(account.get_type().name(), account_props);
 		}
 		
@@ -230,7 +223,6 @@ public class Accounts : ArrayList<AAccount> {
 					for(Xml.Node* iter_streams = iter_acc->children; iter_streams != null; iter_streams = iter_streams->next) {
 						if(iter_streams->type != ElementType.ELEMENT_NODE || iter_streams->name != "stream")
 							continue;
-						debug("ok");
 						string? stream_type = iter_streams->get_prop("type");
 						if(stream_type == null)
 							continue;
@@ -266,7 +258,6 @@ public class Accounts : ArrayList<AAccount> {
 				Value? val = value_from_string(pval, p.value_type);
 				
 				if(val == null) {
-					debug("this value type is not supported");
 					continue;
 				}
 				
@@ -377,7 +368,6 @@ public class Accounts : ArrayList<AAccount> {
 		}
 		
 		if(account == null) {
-			debug("can't find this account");
 			return;
 		}
 		
@@ -410,7 +400,6 @@ public class Accounts : ArrayList<AAccount> {
 			dlg.close();
 			
 			if(result == Gtk.ResponseType.YES) {
-				debug("remove");
 				int account_index = index_of(account);
 				element_was_removed(account_index.to_string(), account);
 				this.remove(account);

@@ -28,7 +28,6 @@ public class ReplyLabel : HBox {
 		this.pack_start(ebox, false, false, 0);
 		
 		ebox.button_release_event.connect((event) => {
-			//debug("ok");
 			if(event.button == 1)
 				clicked(); //signal
 			

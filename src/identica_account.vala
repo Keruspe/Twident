@@ -51,14 +51,12 @@ public class Account : Twitter.Account {
 		HashMap<string, string> map = new HashMap<string, string>();
 		map["s-group-name"] = group_name;
 		
-		debug(avaliable_streams().size.to_string());
 		add_stream(StreamEnum.GROUP, true, map);
 	}
 	
 	//private Rest.Proxy proxy;
 	/*
 	protected override void init_stream(AStream stream) {
-		debug("init stream");
 		
 		if(s_password == "")
 			return;
@@ -83,10 +81,8 @@ public class Account : Twitter.Account {
 	}
 	
 	public override void post_install() {
-		debug("new proxy");
 		//create proxy
 		if(proxy == null) {
-			debug("new proxy");
 			proxy = new Rest.Proxy("http://identi.ca/api/", false);
 		}
 		
@@ -100,7 +96,6 @@ public class Account : Twitter.Account {
 	}
 	
 	public override bool create(Gtk.Window w) {
-		debug("trying to create account");
 		
 		CreateDialog create_dlg = new CreateDialog(w);
 		if(create_dlg.run() == Gtk.ResponseType.OK) {

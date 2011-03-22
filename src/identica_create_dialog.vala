@@ -92,15 +92,12 @@ public class CreateDialog : CreateDialogGeneric {
 		check_btn.set_sensitive(true);
 		
 		if(call.get_status_code() != 200) { //if we got some error
-			debug(call.get_status_message()); //TODO
 			return;
 		}
-		debug(call.get_payload());
 		
 		/*try {
 			thread = Thread.create(load_userpic, true);
 		} catch(ThreadError e) {
-			debug(e.message);
 			return;
 		}*/
 		
@@ -115,7 +112,6 @@ public class CreateDialog : CreateDialogGeneric {
 		if(path != null)
 			acc_img.set_from_file(path);
 		
-		debug("%s, %s", user.name, user.pic);
 		
 		ok_btn.set_sensitive(true);
 	}

@@ -93,15 +93,12 @@ public class Avatar : Image {
 		try {
 			thread = Thread.create<void*>(load_pic_thread, true);
 		} catch(GLib.Error e) {
-			debug(e.message); //TODO
 		}
 	}
 	
 	private void* load_pic_thread() {
 		string? img_path = img_cache.download(url);
-		debug("something loaded");
 		if(img_path != null) {
-			//debug("%s, %s", img_path, status.user.pic);
 			
 			Idle.add(() => {
 				thread.join();
@@ -110,7 +107,6 @@ public class Avatar : Image {
 			});
 		}
 		
-		//debug("loading userpic");
 		return null;
 	}
 }

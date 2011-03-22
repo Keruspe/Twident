@@ -71,7 +71,6 @@ public class Parser : GLib.Object {
 					if(status.reply == null)
 						status.reply = new Reply();
 					
-					debug(snode.content);
 					status.reply.status_id = snode.content;
 				}
 				break;
@@ -145,7 +144,6 @@ public class Parser : GLib.Object {
 			if(iter->type != ElementType.ELEMENT_NODE)
 				continue;
 			
-			debug(iter->name);
 			if(iter->name == "entry")
 				lst.add(get_search_status(iter, own_name));
 		}
@@ -171,7 +169,6 @@ public class Parser : GLib.Object {
 			if(iter->type != ElementType.ELEMENT_NODE)
 				continue;
 			
-			//debug("%s: %s", iter->name, iter->get_content());
 			
 			switch(iter->name) {
 			case "id":

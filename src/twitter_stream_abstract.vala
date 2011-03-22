@@ -22,7 +22,6 @@ public abstract class StreamAbstract : AStream {
 		this.proxy = proxy;
 		this.own_name = own_name;
 		
-		debug("proxy was added");
 		
 		//setup call
 		call = proxy.new_call();
@@ -45,10 +44,7 @@ public abstract class StreamAbstract : AStream {
 		try {
 			thread = Thread.create(sync_thread, true);
 		} catch(ThreadError e) {
-			debug(e.message);
 		}*/
-		debug(func);
-		debug("start updating");
 		status = StreamStatus.UPDATING;
 		
 		Rest.ProxyCallAsyncCallback callback;
@@ -67,25 +63,20 @@ public abstract class StreamAbstract : AStream {
 	}
 	
 	public void get_response(Rest.ProxyCall call, Error? error, Object? obj) {
-		debug("finish updating");
 		status = StreamStatus.READY;
-		//debug(call.get_payload());
 		parse_stream(call.get_payload());
 		
 		updated(); //emit signal
 	}
 	
 	public void get_more_response(Rest.ProxyCall call, Error? error, Object? obj) {
-		debug("finish updating");
 		status = StreamStatus.READY;
-		//debug(call.get_payload());
 		parse_more_stream(call.get_payload());
 		
 		updated(); //emit signal
 	}
 	
 	public override void menu_refresh() {
-		debug("twitter sync");
 		sync();
 	}
 }

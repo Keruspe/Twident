@@ -27,9 +27,7 @@ public class CreateDialog : CreateDialogGeneric {
 		
 		base(parent, _("Link with %s account").printf(service_name), icon_name);
 		
-		debug(this.root_url);
 		this.root_url = root_url;
-		debug("ok");
 		
 		this.proxy = new OAuthProxy(consumer_key, consumer_secret,
 			root_url, false);
@@ -104,7 +102,6 @@ public class CreateDialog : CreateDialogGeneric {
 			request_token_thread = Thread.create<void*>(request_token, true);
 			//jo = request_token_thread.join();
 		} catch(ThreadError e) {
-			debug(e.message);
 		}
 	}
 	
@@ -115,7 +112,6 @@ public class CreateDialog : CreateDialogGeneric {
 		try {
 			request_token_thread = Thread.create<void*>(access_token, true);
 		} catch(ThreadError e) {
-			debug(e.message);
 		}
 	}
 	
@@ -124,11 +120,9 @@ public class CreateDialog : CreateDialogGeneric {
 		try {
 			answer = OAuthProxy.request_token(proxy, "oauth/request_token", "oob");
 		} catch (GLib.Error e) {
-			debug(e.message); //TODO
 		}
 		
 		if(!answer) {
-			debug("request token is failed");
 			
 			if(must_close)
 				return null;
@@ -156,11 +150,9 @@ public class CreateDialog : CreateDialogGeneric {
 		try {
 			answer = OAuthProxy.access_token(proxy, "oauth/access_token", pin.text);
 		} catch(GLib.Error e) {
-			debug(e.message); //TODO
 		}
 		
 		if(!answer) {
-			debug("access token is failed");
 			
 			return if_error();
 		}
@@ -176,18 +168,15 @@ public class CreateDialog : CreateDialogGeneric {
 		try {
 			answer = call.sync();
 		} catch(GLib.Error e) {
-			debug(e.message); //TODO
 			
 			return if_error();
 		}
 		
 		if(!answer) {
-			debug("access token is failed");
 			
 			return if_error();
 		}
 		
-		debug(call.get_payload());
 		
 		Rest.XmlParser parser = new Rest.XmlParser();
 		Rest.XmlNode root = parser.parse_from_data(call.get_payload(),
@@ -227,7 +216,6 @@ public class CreateDialog : CreateDialogGeneric {
 	
 	/* When we got a token */
 	private void token_received(string token) {
-		debug(token);
 		
 		//open link in a browser
 		GLib.Pid pid;
@@ -237,7 +225,6 @@ public class CreateDialog : CreateDialogGeneric {
 				root_url + "oauth/authorize?oauth_token=" + token}, null,
 				GLib.SpawnFlags.STDOUT_TO_DEV_NULL, null, out pid);
 		} catch(GLib.SpawnError e) {
-			debug(e.message); //TODO
 		}
 		
 		tprogress.hide();

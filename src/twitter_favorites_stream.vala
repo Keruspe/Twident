@@ -12,7 +12,6 @@ public class StreamFavorites : Twitter.StreamHome {
 	public override string id {get; set; default = "favorites";}
 	
 	construct {
-		debug("twitter favorites stream was created");
 	}
 }
 

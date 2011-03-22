@@ -68,7 +68,6 @@ public abstract class AAccount : GLib.Object {
 	
 	/** Send status */
 	public virtual void send_status(string status_text, string reply_id) {
-		debug("not implemented");
 	}
 	
 	/** Do something after creating */
@@ -78,7 +77,6 @@ public abstract class AAccount : GLib.Object {
 	
 	construct {
 		notify["userpic"].connect((s) => {
-			debug("userpic changed");
 			account_was_changed(this);
 		});
 	}
@@ -90,7 +88,6 @@ public abstract class AAccount : GLib.Object {
 			t.get_current_time();
 			stream.s_hash = t.tv_usec.to_string() + Random.int_range(10000, 99999).to_string(); //this is how we generate unique hash
 		}
-		//debug("unique hash: %s", stream.s_hash);
 		return "%s::%s::%s::%s".printf(id, s_name, stream.id, stream.s_hash);
 	}
 	
@@ -102,7 +99,6 @@ public abstract class AAccount : GLib.Object {
 	/** Init new account by dialog */
 	public virtual bool create(Gtk.Window w) {
 		setup_default_streams();
-		debug(streams.size.to_string());
 		return true;
 	}
 	
@@ -141,7 +137,6 @@ public abstract class AAccount : GLib.Object {
 				Value? val = Accounts.value_from_string(pval, p.value_type);
 			
 				if(val == null) {
-					debug("this value type is not supported");
 					continue;
 				}
 			
@@ -171,21 +166,17 @@ public abstract class AAccount : GLib.Object {
 	
 	/** If we need to add some options to the stream */
 	protected virtual void init_stream(AStream stream) {
-		debug("no init for this stream");
 	}
 	
 	/** Create list of streams from restored state */
 	protected virtual void streams_setup(ArrayList<StreamState> streams_states) {
-		debug("start creating streams");
 		foreach(StreamState state in streams_states) {
 			add_stream(state.stream_type);
 		}
-		debug("streams created");
 	}
 	
 	/** Reaction on stream's popup menu actions */
 	public void streams_actions_tracker(int stream_index, MenuItems item) {
-		debug("action: %d", item);
 		switch(item) {
 		case MenuItems.REMOVE:
 			stream_was_removed(this, stream_index);
@@ -290,7 +281,6 @@ public abstract class AAccount : GLib.Object {
 	public virtual AStream? new_content_action(string action_type,
 		string stream_hash, string val) {
 		
-		debug("menu action");
 		AStream? stream = null;
 		foreach(AStream s in streams) {
 			if(s.s_hash == stream_hash) {
@@ -305,7 +295,6 @@ public abstract class AAccount : GLib.Object {
 	/** Show status context menu */
 	public virtual void context_menu(AStream stream, Status status) {
 		Menu menu = new Menu();
-		debug("creating context menu");
 		
 		foreach(StatusMenuItems item in status_popup_items) {
 			ImageMenuItem? menu_item = null;

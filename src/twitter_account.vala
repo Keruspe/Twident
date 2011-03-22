@@ -68,7 +68,6 @@ public class Account : AAccount {
 	public override string id {get; set; default = "twitter";}
 	
 	protected override void init_stream(AStream stream) {
-		debug("init stream");
 		
 		if(s_token != "") {
 			if(stream.get_type().name() == "TwitterStreamSearch") { //setup searches
@@ -110,8 +109,6 @@ public class Account : AAccount {
 	}
 	
 	public override bool create(Gtk.Window w) {
-		debug("trying to create account");
-		debug(consumer_key);
 		CreateDialog create_dlg = new CreateDialog(w, root_url, consumer_key,
 			consumer_secret, accounts_types[get_type()].icon_name,
 			accounts_types[get_type()].name);
@@ -174,7 +171,6 @@ public class Account : AAccount {
 			if(status == null)
 				return null;
 			
-			debug(status.id);
 			
 			//get status and send signal to cintent_view
 			rec_reply = new RecursiveReply(proxy, status, s_name,
@@ -188,7 +184,6 @@ public class Account : AAccount {
 		*/
 		/*
 		case "contextmenu":
-			debug("menu");
 			AStream? stream = null;
 			Status? status = null;
 			foreach(AStream astream in streams) {
@@ -216,7 +211,6 @@ public class Account : AAccount {
 			if(stream != null && status != null)
 				context_menu(stream, status);
 			else
-				debug("can't find this status");
 			
 			return null;
 		*/
@@ -226,14 +220,12 @@ public class Account : AAccount {
 	}
 	
 	public override void get_conversation(Status status) {
-		debug(status.id);
 		
 		//get status and send signal to cintent_view
 		rec_reply = new RecursiveReply(proxy, status, s_name);
 		/*
 		rec_reply.new_reply.connect((rstatus, sid) => {
 			//insert_reply(shash, sid, rstatus); //signal
-			debug(rstatus.id);
 		});*/
 		rec_reply.run();
 	}
@@ -248,7 +240,6 @@ public class Account : AAccount {
 		try {
 			Thread.create<void*>(load_userpic, true);
 		} catch(GLib.Error e) {
-			debug(e.message); //TODO
 		}
 	}
 	
@@ -258,23 +249,19 @@ public class Account : AAccount {
 		
 		string? img_path = img_cache.download(s_avatar_url);
 		if(img_path != null) {
-			debug("%s, %s", img_path, s_avatar_url);
 			Idle.add(() => {
 				try {
 					userpic = new Gdk.Pixbuf.from_file(img_path);
 				} catch(GLib.Error e) {
-					debug(e.message); //TODO
 				}
 				return false;
 			});
 		}
 		
-		debug("loading userpic");
 		return null;
 	}
 	
 	public override void send_status(string status_text, string reply_id) {
-		debug("%s (%s): status sent".printf(this.s_name, this.id));
 		
 		Rest.ProxyCall call = proxy.new_call();
 		call.add_param("status", status_text);
@@ -294,7 +281,6 @@ public class Account : AAccount {
 	}
 	
 	protected void status_sent_respose(Rest.ProxyCall call, Error? error, Object? obj) {
-		debug("ok");
 		
 		status_sent(this, true);
 		
@@ -328,7 +314,6 @@ public class Account : AAccount {
 					foreach(Status real_status in get_statuses(fstatus.id)) {
 						if(real_status != null) {
 							real_status.favorited = !real_status.favorited;
-							debug("invert");
 						}
 					}
 				}

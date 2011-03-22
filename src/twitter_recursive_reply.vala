@@ -21,13 +21,11 @@ public class RecursiveReply : GLib.Object  {
 	}
 	
 	public void run() {
-		debug("ok");
 		get_reply(fstatus);
 	}
 	
 	private void get_reply(Status status) {
 		if(status.reply == null) {
-			debug("the end");
 			fstatus.end_reply();
 			return;
 		}
@@ -35,7 +33,6 @@ public class RecursiveReply : GLib.Object  {
 		Rest.ProxyCall call = proxy.new_call();
 		call.set_function("statuses/show/%s.xml".printf(status.reply.status_id));
 		call.set_method("GET");
-		//debug("statuses/show/%s.xml".printf(status.id));
 		Rest.ProxyCallAsyncCallback callback = status_get_respose;
 		try {
 			call.run_async(callback, this);
@@ -45,7 +42,6 @@ public class RecursiveReply : GLib.Object  {
 	}
 	
 	protected void status_get_respose(Rest.ProxyCall call, Error? error, Object? obj) {
-		//debug(call.get_status_code().to_string());
 		Status? status = Parser.get_status_from_string(call.get_payload(), s_name);
 		
 		if(status == null)

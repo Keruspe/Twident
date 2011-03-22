@@ -26,7 +26,6 @@ public class ViewArea : VBox {
 			if(stream == null) {
 				foreach(AStream st in account.streams) {
 					remove_feed_view(st);
-					debug("streams removed");
 				}
 			} else { //if stream
 				remove_feed_view(stream);

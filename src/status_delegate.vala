@@ -185,7 +185,6 @@ public class StatusDelegate : EventBox {
 			
 			//add thumbs to the layout
 			foreach(string key in map.keys) {
-				debug(map[key]);
 				//Avatar thumb = new Avatar.from_url(map[key], 75);
 				Thumb thumb = new Thumb(map[key], 75, key);
 				hb_thumbs.pack_start(thumb, false, false, 0);
@@ -225,10 +224,8 @@ public class StatusDelegate : EventBox {
 	}
 	
 	private void add_new_reply(Status nstatus) { //new reply received
-		debug(nstatus.id);
 		
 		if(con_view == null) {
-			debug("ok");
 			con_view = new ConversationView();
 			vb_main.pack_start(con_view, false, false, 0);
 			con_view.show_all();
@@ -254,7 +251,6 @@ public class StatusDelegate : EventBox {
 				return true;
 			
 			status.fresh = false;
-			debug("ok");
 			return true;
 		
 		case 3: //context menu
@@ -270,7 +266,6 @@ public class StatusDelegate : EventBox {
 		if(event.type != Gdk.EventType.2BUTTON_PRESS)
 			return false;
 		
-		debug("double click");
 		content.set_selectable(true);
 		main_window.set_focus(content);
 		
@@ -295,7 +290,6 @@ public class StatusDelegate : EventBox {
 			break;
 		
 		case "userinfo":
-			debug("not implemented");
 			break;
 		
 		default:

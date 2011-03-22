@@ -33,14 +33,11 @@ public abstract class AStream : Object {
 	}
 	
 	public virtual void menu_refresh() {
-		debug("not implemented");
 	}
 	
 	public virtual void menu_settings() {
-		debug("not implemented");
 	}
 	
 	public virtual void menu_more() {
-		debug("not implemented");
 	}
 }

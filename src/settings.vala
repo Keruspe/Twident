@@ -22,7 +22,6 @@ public class Settings : Object {
 			try {
 				dir.make_directory(null);
 			} catch(GLib.Error e) {
-				debug(e.message); //TODO
 			}
 		}
 		
@@ -36,7 +35,6 @@ public class Settings : Object {
 			try {
 				fstream = opt_file.read(null);
 			} catch(GLib.Error e) {
-				debug(e.message); //TODO
 				return;
 			}
 			DataInputStream stream = new DataInputStream(fstream);
@@ -45,7 +43,6 @@ public class Settings : Object {
 			try {
 				data = stream.read_until("", null, null);
 			} catch(GLib.Error e) {
-				debug(e.message); //TODO
 				return;
 			}
 			from_xml(data);
@@ -59,7 +56,6 @@ public class Settings : Object {
 		try {
 			stream = file.replace(null, false, FileCreateFlags.NONE, null);
 		} catch(GLib.Error e) {
-			debug(e.message); //TODO
 			return;
 		}
 		
@@ -68,7 +64,6 @@ public class Settings : Object {
 		try {
 			data_stream.put_string(to_xml(), null);
 		} catch(GLib.Error e) {
-			debug(e.message); //TODO
 		}
 	}
 	
@@ -184,7 +179,6 @@ public class Settings : Object {
 			if(iter->type != ElementType.ELEMENT_NODE)
 				continue;
 			
-			debug(iter->name);
 			opt_map.set(iter->name, iter->get_content());
 		}
 		
@@ -199,7 +193,6 @@ public class Settings : Object {
 			Value? val = Settings.value_from_string(pval, p.value_type);
 			
 			if(val == null) {
-				debug("this value type is not supported");
 				continue;
 			}
 			

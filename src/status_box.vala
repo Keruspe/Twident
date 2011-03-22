@@ -23,7 +23,6 @@ public class StatusBox : TextView {
 				buffer.text = "";
 			}
 			
-			debug("the end of status sending");
 			//TODO
 		});
 		
@@ -80,7 +79,6 @@ public class StatusBox : TextView {
 	}
 	
 	private void reply(AAccount account, Status status) {
-		debug("reply");
 		acc_box.unselect_all();
 		acc_box.select(account);
 		
@@ -91,7 +89,6 @@ public class StatusBox : TextView {
 	}
 	
 	private void enter_pressed() {
-		debug("enter");
 		
 		if(settings.selected_for_posting.size < 1) {
 			Gtk.MessageDialog dlg = new Gtk.MessageDialog(parentWindow, Gtk.DialogFlags.MODAL,

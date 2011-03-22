@@ -12,7 +12,6 @@ public class StreamMentions : Twitter.StreamHome {
 	public override string id {get; set; default = "mentions";}
 	
 	construct {
-		debug("twitter mentions stream was created");
 	}
 }
 

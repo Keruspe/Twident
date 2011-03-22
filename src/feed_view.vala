@@ -15,14 +15,12 @@ public class FeedView : ScrolledWindow {
 		
 		scroll = (VScrollbar) get_vscrollbar();
 		scroll.value_changed.connect(() => {
-			//debug(scroll.get_value().to_string());
 			
 			double max = scroll.adjustment.upper;
 			double current = scroll.get_value();
 			double scroll_size = scroll.adjustment.page_size;
 			
 			if(current != 0 && current + scroll_size == max) {
-				debug("max");
 				if(model.stream != null) {
 					model.stream.menu_more();
 				}
@@ -45,7 +43,6 @@ public class FeedView : ScrolledWindow {
 	private StatusDelegate new_delegate(Status status, AStream stream) {
 		StatusDelegate widget = new StatusDelegate(status, stream);
 		widget.show_all();
-		debug("ok");
 		return widget;
 	}
 	

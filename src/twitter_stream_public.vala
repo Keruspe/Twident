@@ -12,7 +12,6 @@ public class StreamPublic : Twitter.StreamHome {
 	public override string id {get; set; default = "public";}
 	
 	construct {
-		debug("twitter public stream was created");
 	}
 }
 

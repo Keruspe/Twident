@@ -14,7 +14,6 @@ public class StreamSearch : Twitter.StreamHome, ISearch {
 	public string s_keyword {get; set; default= "";}
 	
 	construct {
-		debug("twitter search stream was created");
 		
 		parsing_delegate = Parser.get_search;
 	}

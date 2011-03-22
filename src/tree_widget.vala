@@ -53,8 +53,6 @@ public class TreeWidget : TreeView {
 		});
 		
 		accounts.stream_was_changed.connect((path, stream) => {
-			debug("stream was changed");
-			debug(path);
 			TreeIter iter;
 			store.get_iter_from_string(out iter, path);
 			
@@ -77,7 +75,6 @@ public class TreeWidget : TreeView {
 		set_model(store);
 
 		foreach(AAccount acc in accounts) {
-			debug(acc.s_name);
 			TreeIter iter;
 			store.append(out iter, null);
 			new_account_general(iter, acc);
@@ -100,7 +97,6 @@ public class TreeWidget : TreeView {
 	
 	/** When current stream or account is changed */
 	private void cursor_changed_callback() {
-		debug("cursor was changed");
 		TreePath? path;
 		TreeViewColumn column;
 
@@ -111,7 +107,6 @@ public class TreeWidget : TreeView {
 		
 		current_tree_path = path;
 		
-		debug(path.to_string());
 
 		if(path.get_depth() == 2) { //stream
 			int account_index = int.parse(path.to_string().split(":")[0]);
@@ -154,7 +149,6 @@ public class TreeWidget : TreeView {
 		if(event.button != 3)
 			return false;
 		
-		debug("popup");
 		AAccount? account = get_current_account();
 		if(account == null)
 			return false;
@@ -194,8 +188,6 @@ public class TreeWidget : TreeView {
 				
 				if(menu_item != null)
 					menu.append(menu_item);
-				else
-					debug("item doesn't supported");
 			}
 			
 			menu.show_all();
@@ -205,7 +197,6 @@ public class TreeWidget : TreeView {
 			
 			foreach(MenuItems item in account.streams.get(stream_index).popup_items) {
 				MenuItems sitem = item;
-				debug("action: %d", sitem);
 				ImageMenuItem menu_item = item2menu(sitem);
 				
 				menu_item.activate.connect(() => {
@@ -215,7 +206,6 @@ public class TreeWidget : TreeView {
 			}
 			
 			menu.show_all();
-			debug("%d", (int) event.time);
 			menu.popup(null, null, null, 1, event.time);
 		}
 		return true;
@@ -295,9 +285,6 @@ public class TreeWidget : TreeView {
 	private void remove_element(string path, AAccount account, AStream? stream = null) {
 		TreeIter iter;
 		store.get_iter_from_string(out iter, path);
-		
-		if(!store.remove(iter))
-			debug("element wasn't removed");
 	}
 	
 	private void new_stream_general(TreeIter iter, AStream stream) {

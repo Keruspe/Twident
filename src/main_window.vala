@@ -94,7 +94,6 @@ public class MainWindow : Window {
 			try {
 				acc_act.set_gicon(Icon.new_for_string(accounts_types.get(t).icon_name));
 			} catch(GLib.Error e) {
-				debug(e.message);
 			}
 			
 			acc_act.activate.connect(() => { //create new account
@@ -138,7 +137,6 @@ public class MainWindow : Window {
 		try {
 			ui.add_ui_from_string(ui_string, ui_string.length);
 		} catch(GLib.Error e) {
-			debug(e.message); //TODO
 		}
 		
 		menubar = ui.get_widget("/MenuBar");

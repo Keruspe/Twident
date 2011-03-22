@@ -11,7 +11,6 @@ public class ImgCache : Object {
 		try {
 			url_re = new Regex("(http://)([a-zA-Z0-9-\\.]+)/(.*)");
 		} catch(GLib.RegexError e) {
-			debug(e.message);
 		}
 		
 		cache_path = Environment.get_user_cache_dir() + "/%s".printf("twident/");
@@ -22,7 +21,6 @@ public class ImgCache : Object {
 			try {
 				cache_dir.make_directory(null);
 			} catch(GLib.Error e) {
-				debug(e.message); //TODO
 			}
 		}
 		
@@ -71,7 +69,6 @@ public class ImgCache : Object {
 		try {
 			msg = new Message("GET", encode_url(url));
 		} catch(GLib.RegexError e) {
-			debug(e.message);
 			return null;
 		}
 		
@@ -80,7 +77,6 @@ public class ImgCache : Object {
 		status_code = (int) session.send_message(msg);
 		
 		if(status_code != 200) {
-			debug("status code is %d", status_code);
 			return null;
 		}
 		

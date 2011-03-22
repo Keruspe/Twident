@@ -30,7 +30,6 @@ public class VisualStyle : GLib.Object {
 		Value? v = Value(typeof(Gdk.Color));
 		if(v != null) {
 			lk_color = rgb_to_hex((Gdk.Color) v);
-			debug(lk_color);
 		}
 		
 		font_family = style.font_desc.get_family();

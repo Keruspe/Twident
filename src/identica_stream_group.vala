@@ -14,7 +14,6 @@ public class StreamGroup : Twitter.StreamHome {
 	public string s_group_name {get; set; default = "";}
 	
 	construct {
-		debug("identica group stream was created");
 	}
 	
 	protected override void set_call_params(bool more = false) {
