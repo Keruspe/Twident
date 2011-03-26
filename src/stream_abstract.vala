@@ -7,9 +7,9 @@ public abstract class AStream : Object {
 	
 	public signal void updated();
 	
-	//public ArrayList<Status> statuses {get; set; default = new ArrayList<Status>();}
+	public ArrayList<Status> statuses {get; set; default = new ArrayList<Status>();}
 	
-	//public ArrayList<Status> statuses_fresh {get; set; default = new ArrayList<Status>();}
+	public ArrayList<Status> statuses_fresh {get; set; default = new ArrayList<Status>();}
 	
 	public FeedModel model {get; set; default = new FeedModel();}
 	
