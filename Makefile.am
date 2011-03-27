@@ -74,7 +74,7 @@ twident_SOURCES = \
     $(extra_twident_SOURCES)
 
 twident_VALAFLAGS = \
-    --thread \
+    --thread -g \
     --vapidir=vapi \
     $(GTK_VALAFLAGS) \
     $(GIO_VALAFLAGS) \
