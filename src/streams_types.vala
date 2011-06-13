@@ -7,7 +7,7 @@ public class StreamsTypes : HashMap<StreamEnum, StreamMeta> {
 	public StreamsTypes() throws GLib.Error {
 		Gtk.IconTheme theme = Gtk.IconTheme.get_default();
 		
-		Gdk.Pixbuf home_icon = theme.load_icon("go-home", 24, 0);
+		Gdk.Pixbuf home_icon = theme.load_icon("go-home", 32, 0);
 		StreamMeta home = new StreamMeta("Home", home_icon);
 		set(StreamEnum.HOME, home);
 
@@ -15,15 +15,15 @@ public class StreamsTypes : HashMap<StreamEnum, StreamMeta> {
 		StreamMeta mentions = new StreamMeta("Mentions", mentions_icon);
 		set(StreamEnum.MENTIONS, mentions);
 		
-		Gdk.Pixbuf public_icon = theme.load_icon("applications-internet", 24, 0);
+		Gdk.Pixbuf public_icon = theme.load_icon("applications-internet", 32, 0);
 		StreamMeta public = new StreamMeta("Public", public_icon);
 		set(StreamEnum.PUBLIC, public);
 		
-		Gdk.Pixbuf favorites_icon = theme.load_icon("gtk-about", 24, 0);
+		Gdk.Pixbuf favorites_icon = theme.load_icon("gtk-about", 32, 0);
 		StreamMeta favorites = new StreamMeta("Favorites", favorites_icon);
 		set(StreamEnum.FAVORITES, favorites);
 		
-		Gdk.Pixbuf search_icon = theme.load_icon("gtk-find", 24, 0);
+		Gdk.Pixbuf search_icon = theme.load_icon("gtk-find", 32, 0);
 		StreamMeta search = new StreamMeta("Search", search_icon);
 		set(StreamEnum.SEARCH, search);
 		

@@ -6,7 +6,7 @@ public class Accounts : ArrayList<AAccount> {
 	
 	public signal void insert_new_account(AAccount account);
 	public signal void insert_new_stream_after(string after_path, AStream stream);
-	public signal void element_was_removed(string path, AAccount account, AStream? stream = null);
+	public signal void account_was_removed(AAccount account);
 	public signal void fresh_items_changed(int items, string path);
 	public signal void account_was_changed(string path, AAccount account);
 	public signal void stream_was_changed(string path, AStream stream);
@@ -16,6 +16,7 @@ public class Accounts : ArrayList<AAccount> {
 	public signal void stop_indicate();
 	public signal void do_reply(AAccount account, Status status);
 	public signal void insert_reply(string stream_hash, string status_id, Status result);
+        public signal void cursor_changed(AStream? new_stream, AStream? old_stream);
 	
 	private string accounts_path;
 	
@@ -306,6 +307,10 @@ public class Accounts : ArrayList<AAccount> {
 		account.insert_reply.connect((stream_hash, status_id, result) => {
 			insert_reply(stream_hash, status_id, result);
 		});
+
+                account.cursor_changed.connect((new_stream, old_stream) => {
+                    cursor_changed(new_stream, old_stream);
+                });
 	}
 
 	/** New stream was added, we need to report about this to the tree widget */
@@ -315,10 +320,9 @@ public class Accounts : ArrayList<AAccount> {
 	}
 	
 	/** Stream was removed from some account */
-	private void remove_stream(AAccount account, int stream_index) {
-		int account_index = index_of(account);
-		AStream stream = account.streams.get(stream_index);
-		element_was_removed("%d:%d".printf(account_index, stream_index), account, stream);
+	private void remove_stream(AAccount account, AStream stream) {
+		//int account_index = index_of(account);
+		//element_was_removed("%d:%d".printf(account_index, stream_index), account, stream);
 	}
 	
 	/** New data in account */
@@ -387,12 +391,11 @@ public class Accounts : ArrayList<AAccount> {
 	}
 	
 	/** Action for accounts */
-	public virtual void actions_tracker(AAccount account, MenuItems item,
-		Gtk.Window parent) {
+	public void actions_tracker(AAccount account, MenuItems item) {
 		
 		switch(item) {
 		case MenuItems.REMOVE:
-			Gtk.MessageDialog dlg = new Gtk.MessageDialog(parent, Gtk.DialogFlags.MODAL,
+			Gtk.MessageDialog dlg = new Gtk.MessageDialog(main_window, Gtk.DialogFlags.MODAL,
 				Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
 				"%s", _("Do you realy want to remove this account?"));
 			
@@ -400,8 +403,8 @@ public class Accounts : ArrayList<AAccount> {
 			dlg.close();
 			
 			if(result == Gtk.ResponseType.YES) {
-				int account_index = index_of(account);
-				element_was_removed(account_index.to_string(), account);
+				//int account_index = index_of(account);
+				account_was_removed(account);
 				this.remove(account);
 			}
 			break;

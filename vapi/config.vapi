@@ -67,8 +67,11 @@ namespace RestCustom {
 		[CCode (cname = "oauth_proxy_new", type = "RestProxy*", has_construct_function = false)]
 		public OAuthProxy (string consumer_key, string consumer_secret, string url_format, bool binding_required);
 
+                [CCode (cname = "oauth_proxy_request_token_async")]
+                public static bool request_token_async (OAuthProxy proxy, string function, string callback_uri, [CCode (delegate_target_pos = 4.9)] OAuthProxyAuthCallback callback, GLib.Object? weak_object) throws GLib.Error;
+
 		[CCode (cname = "oauth_proxy_request_token")]
-		public static bool request_token (OAuthProxy proxy, string url_format, string oob) throws GLib.Error;
+		public static bool request_token (OAuthProxy proxy, string function, string callback_uri) throws GLib.Error;
 
 		[CCode (cname = "oauth_proxy_access_token")]
 		public static bool access_token (OAuthProxy proxy, string url_format, string oob) throws GLib.Error;
@@ -94,4 +97,7 @@ namespace RestCustom {
 		public string token { get; set; }
 		public string token_secret { get; set; }
 	}
+
+        [CCode (cheader_filename = "rest/oauth-proxy.h")]
+        public delegate void OAuthProxyAuthCallback (OAuthProxy proxy, GLib.Error? error, GLib.Object? weak_object);
 }

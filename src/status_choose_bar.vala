@@ -38,10 +38,7 @@ public class StatusChooseBar : Toolbar {
 			update_config();
 		});
 		
-		accounts.element_was_removed.connect((path, acc) => {
-			if(path.contains(":")) //just stream, not account
-			return;
-		
+	        accounts.account_was_removed.connect((acc) => {	
 			foreach(Widget tb in this.get_children()) {
 				if(tb.get_type() != typeof(ToggleToolButton))
 					continue;

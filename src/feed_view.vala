@@ -12,6 +12,9 @@ public class FeedView : ScrolledWindow {
 		
 		vbox = new VBox(false, 2);
 		add_with_viewport(vbox);
+
+                //remove border from viewport
+                ((Viewport) get_child()).set_shadow_type(ShadowType.NONE);
 		
 		scroll = (VScrollbar) get_vscrollbar();
 		scroll.value_changed.connect(() => {

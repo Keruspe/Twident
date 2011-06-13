@@ -1,5 +1,5 @@
 using Gtk;
-using Rest;
+using RestCustom;
 using Cairo;
 
 public class TestWindow : Window {
@@ -91,4 +91,7 @@ public void some_case(string? path) {
 	if(path == null) {
 		return;
 	}
+}
+
+public void request_token(OAuthProxy proxy, Error? error, GLib.Object? weak_object) {
 }

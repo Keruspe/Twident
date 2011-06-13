@@ -98,11 +98,14 @@ public class CreateDialog : CreateDialogGeneric {
 		tprogress.show();
 		tprogress.start();
 		
-		try {
-			request_token_thread = Thread.create<void*>(request_token, true);
+			OAuthProxyAuthCallback request_token_callback = request_token;
+                        try {
+                        OAuthProxy.request_token_async(proxy, "oauth/request_token", "oob",
+                            request_token_callback, new GLib.Object());
+                        } catch (GLib.Error e) {
+                        }
+                        //request_token_thread = Thread.create<void*>(request_token, true);
 			//jo = request_token_thread.join();
-		} catch(ThreadError e) {
-		}
 	}
 	
 	private void access_token_action() {
@@ -115,33 +118,31 @@ public class CreateDialog : CreateDialogGeneric {
 		}
 	}
 	
-	private void* request_token() {
-		bool answer = false;
-		try {
-			answer = OAuthProxy.request_token(proxy, "oauth/request_token", "oob");
-		} catch (GLib.Error e) {
-		}
-		
+	public void request_token(OAuthProxy? proxy, Error? error, GLib.Object? weak_object) {
+		//bool answer = false;
+			//answer = OAuthProxy.request_token(proxy, "oauth/request_token", "oob");
+
+                //this.proxy = proxy;
+		/*
 		if(!answer) {
 			
 			if(must_close)
-				return null;
+				return;
 			
 			auth_btn.set_sensitive(true);
 			tprogress.hide();
-			return null;
+			return;
 		}
-		
-		if(must_close)
-			return null;
-		
-		Idle.add(() => {
-			string token = OAuthProxy.get_token(proxy);
-			token_received(token);
-			return false;
-		});
-		
-		return null;
+                */
+	
+                //string token = OAuthProxy.get_token(this.proxy);
+                token_received(OAuthProxy.get_token(proxy));
+
+                /*
+                Idle.add(() => {
+                    request_token_thread.join();
+                    return false;
+                });*/
 	}
 	
 	private void* access_token() {

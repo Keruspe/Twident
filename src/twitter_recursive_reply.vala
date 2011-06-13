@@ -1,4 +1,4 @@
-using RestCustom;
+using Rest;
 using Gee;
 
 namespace Twitter {

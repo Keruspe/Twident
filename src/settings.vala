@@ -8,6 +8,7 @@ public class Settings : Object {
 	public int hpaned_position {get; set; default = 150;}
 	
 	public string current_item {get; set; default = "";}
+        public int current_account{get; set; default = 0;}
 	
 	public ArrayList<string> selected_for_posting {get; set; default = new ArrayList<string>();}
 	

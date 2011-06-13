@@ -5,7 +5,7 @@ public class ViewArea : VBox {
 	
 	private Accounts accounts;
 	private HashMap<AStream, FeedView> feeds;
-	private AStream current_stream;
+	//private AStream current_stream;
 	
 	public ViewArea(Accounts accounts) {
 		this.accounts = accounts;
@@ -14,22 +14,18 @@ public class ViewArea : VBox {
 		
 		homogeneous = true;
 		spacing = 0;
-		
+	
+                /*
 		accounts.insert_new_stream_after.connect((path, stream) => {
 			FeedView view = create_feed_view(stream);
 			view.show_all();
-			set_current_view(stream);
-		});
-		
-		accounts.element_was_removed.connect((path, account, stream) => {
-			//if account
-			if(stream == null) {
-				foreach(AStream st in account.streams) {
-					remove_feed_view(st);
-				}
-			} else { //if stream
-				remove_feed_view(stream);
-			}
+			set_current_view(stream.account, stream);
+		});*/
+	
+                accounts.account_was_removed.connect((account) => {
+                    foreach(AStream st in account.streams) {
+                        remove_feed_view(st);
+                    }
 		});
 		
 		accounts.insert_new_account.connect((account) => {
@@ -37,16 +33,35 @@ public class ViewArea : VBox {
 				create_feed_view(stream);
 			}
 		});
-		
+	
+                /*
+                accounts.cursor_changed.connect((new_stream, old_stream) => {
+                    if(new_stream == null)
+                        return; //TODO
+
+                    set_current_view(new_stream.account, new_stream, old_stream);
+                });*/
+
 		//generate_views();
 		//show_all();
 	}
 	
 	public void generate_views() {
 		foreach(AAccount account in accounts) {
+                    account.streams.removed.connect(remove_feed_view);
+                    account.streams.added.connect((stream) => {
+                        FeedView view = create_feed_view(stream);
+                        view.show_all();
+                        //set_current_view(stream.account, stream);
+                    });
 			foreach(AStream stream in account.streams) {
 				create_feed_view(stream);
 			}
+                    account.streams.cursor_changed.connect((new_stream, old_stream) => {
+                        if(new_stream == null)
+                            return; //TODO
+                        set_current_view(new_stream.account, new_stream, old_stream);
+                    });
 		}
 	}
 	
@@ -55,8 +70,9 @@ public class ViewArea : VBox {
 		remove(view);
 		feeds.unset(stream);
 		
-		if(stream == current_stream)
-			current_stream.dispose();
+                view.dispose();
+		//if(stream == current_stream)
+		//	current_stream.dispose();
 	}
 	
 	private FeedView create_feed_view(AStream stream) {
@@ -72,15 +88,21 @@ public class ViewArea : VBox {
 		return view;
 	}
 	
-	public void set_current_view(AStream stream) {
-		if(stream == current_stream)
-			return;
+	public void set_current_view(AAccount? account, AStream? stream, AStream? old_stream) {
+		//if(stream == current_stream)
+		//	return;
+
+                if(stream == null) {
+                    return;/*
+                    if(account.streams.size < 1)
+                        return;
+                    stream = account.streams.get(0);*/
+                }
 		
-		feeds[current_stream].hide();
-		current_stream = stream;
-		
-		
-		FeedView view = feeds[stream];
-		view.show_all();
+                if(old_stream != null)
+                    feeds[old_stream].hide();
+                //current_stream = stream;
+                feeds[stream].hide();
+		//view.show_all();
 	}
 }

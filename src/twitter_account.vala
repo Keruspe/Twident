@@ -1,6 +1,6 @@
 using Gee;
 using TwidentEnums;
-using RestCustom;
+using Rest;
 
 namespace Twitter {
 
@@ -69,27 +69,27 @@ public class Account : AAccount {
 	
 	protected override void init_stream(AStream stream) {
 		
-		if(s_token != "") {
-			if(stream.get_type().name() == "TwitterStreamSearch") { //setup searches
-				if(((StreamSearch) stream).s_keyword == "") {
-					SearchDialog s_dialog = new SearchDialog();
-					if(s_dialog.run() == Gtk.ResponseType.OK) {
-						((StreamSearch) stream).s_keyword = s_dialog.input.get_text();
-						s_dialog.close();
-					} else { //remove stream
-						int index = streams.index_of(stream);
-						streams_actions_tracker(index, MenuItems.REMOVE);
-						s_dialog.close();
-						return;
-					}
-				}
-				
-				Rest.Proxy search_proxy = new Rest.Proxy(search_url, false);
-				((Twitter.StreamAbstract) stream).set_proxy(search_proxy, s_name);
-			} else {
-				((Twitter.StreamAbstract) stream).set_proxy(proxy, s_name);
+		//if(s_token != "") {
+                if(stream.get_type() == typeof(Twitter.StreamSearch)) { //setup searches
+                    if(((StreamSearch) stream).s_keyword == "") {
+                        SearchDialog s_dialog = new SearchDialog();
+                        if(s_dialog.run() == Gtk.ResponseType.OK) {
+                            ((StreamSearch) stream).s_keyword = s_dialog.input.get_text();
+                            s_dialog.close();
+                        } else { //remove stream
+                            //int index = streams.index_of(stream);
+                            streams_actions_tracker(stream, MenuItems.REMOVE);
+                            s_dialog.close();
+                            return;
 			}
-		}
+				
+			}
+                        Rest.Proxy search_proxy = new Rest.Proxy(search_url, false);
+                        ((Twitter.StreamAbstract) stream).set_proxy(search_proxy, s_name);
+                        return;
+                    }
+                    ((Twitter.StreamAbstract) stream).set_proxy(proxy, s_name);
+		//}
 	}
 	
 	public override void post_install() {

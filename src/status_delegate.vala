@@ -24,7 +24,7 @@ public class StatusDelegate : EventBox {
 	
 	private Gdk.Pixbuf? rt_pixbuf = null;
 	
-	private string date_string = "<small><span foreground='#888'><b>%s</b></span></small>";
+	private string date_string = "<span foreground='#bbb'>%s</span>";
 	
 	private Regex nicks;
 	private Regex tags;
@@ -333,22 +333,22 @@ public class StatusDelegate : EventBox {
 		int delta = TimeParser.time_to_diff(created, is_search);
 		
 		if(delta < 30)
-			return _("a few seconds ago");
+			return _("%i secs").printf(delta);
 		if(delta < 120) {
 			//timer.set_interval(120);
-			return _("1 minute ago");
+			return _("1 min");
 		}
 		if(delta < 3600) {
 			timer.set_interval(300);
-			return _("%i minutes ago").printf(delta / 60);
+			return _("%i mins").printf(delta / 60);
 		}
 		if(delta < 7200) {
 			timer.set_interval(3600);
-			return _("about 1 hour ago");
+			return _("1 hour");
 		}
 		if(delta < 86400) {
 			timer.set_interval(3600);
-			return _("about %i hours ago").printf(delta / 3600);
+			return _("%i hours").printf(delta / 3600);
 		}
 		
 		timer.set_interval(0);

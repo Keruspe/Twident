@@ -21,7 +21,7 @@ public class Account : Twitter.Account {
 	}
 	
 	protected override void init_stream(AStream stream) {
-		if(stream.get_type() == typeof(Identica.StreamGroup)) { //init group stream
+		/*if(stream.get_type() == typeof(Identica.StreamGroup)) { //init group stream
 			if(((StreamGroup) stream).s_group_name == "") {
 				SearchDialog s_dialog = new SearchDialog();
 				if(s_dialog.run() == Gtk.ResponseType.OK) {
@@ -29,21 +29,20 @@ public class Account : Twitter.Account {
 					s_dialog.close();
 					((Twitter.StreamAbstract) stream).set_proxy(proxy, s_name);
 				} else { //remove stream
-					int index = streams.index_of(stream);
-					streams_actions_tracker(index, MenuItems.REMOVE);
+					streams_actions_tracker(stream, MenuItems.REMOVE);
 					s_dialog.close();
 					return;
 				}
 				return;
 			}
-		}
+		}*/
 		
 		base.init_stream(stream);
 	}
 	
 	protected override HashMap<StreamEnum, GLib.Type> avaliable_streams() {
 		HashMap<StreamEnum, GLib.Type> map = base.avaliable_streams();
-		map.set(StreamEnum.GROUP, typeof(Identica.StreamGroup));
+		//map.set(StreamEnum.GROUP, typeof(Identica.StreamGroup));
 		return map;
 	}
 	

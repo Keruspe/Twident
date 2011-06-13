@@ -55,7 +55,6 @@ base_twident_SOURCES = \
     src/twitter_create_dialog.vala \
     src/conversation_view.vala \
     src/twitter_stream_abstract.vala \
-    src/tree_widget.vala \
     src/accounts_types.vala \
     src/view_area.vala \
     src/settings.vala \
@@ -63,7 +62,8 @@ base_twident_SOURCES = \
     src/account_abstract.vala \
     src/identica_account.vala \
     src/twitter_stream_search.vala \
-    src/globals.vala
+    src/globals.vala \
+    src/accounts_widget.vala
 
 extra_twident_SOURCES = \
     vapi/time_parser.c \
