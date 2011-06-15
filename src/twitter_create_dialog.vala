@@ -101,7 +101,7 @@ public class CreateDialog : CreateDialogGeneric {
 			OAuthProxyAuthCallback request_token_callback = request_token;
                         try {
                         OAuthProxy.request_token_async(proxy, "oauth/request_token", "oob",
-                            request_token_callback, new GLib.Object());
+                            request_token_callback, this);
                         } catch (GLib.Error e) {
                         }
                         //request_token_thread = Thread.create<void*>(request_token, true);
