@@ -102,7 +102,7 @@ public class ViewArea : VBox {
                 if(old_stream != null)
                     feeds[old_stream].hide();
                 //current_stream = stream;
-                feeds[stream].hide();
+                feeds[stream].show_all();
 		//view.show_all();
 	}
 }

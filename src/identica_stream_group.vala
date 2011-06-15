@@ -1,6 +1,7 @@
 /*
+
 namespace Identica {
-	
+
 public class StreamGroup : Twitter.StreamHome, ISearch {
 
 	public override StreamEnum stream_type {get { return StreamEnum.GROUP; } }
@@ -9,14 +10,19 @@ public class StreamGroup : Twitter.StreamHome, ISearch {
 	
 	public override string id {get; set; default = "group";}
 	
-	public string s_group_name {get; set; default = "";}
+	public string s_group_name {get; set; default= "";}
+	
+	construct {
+		
+		parsing_delegate = Parser.get_search;
+	}
 	
 	protected override void set_call_params(bool more = false) {
 		base.set_call_params(more);
 		
-		func = "statusnet/groups/timeline/" + s_group_name + ".xml";
 		call.remove_param("q");
+		call.add_param("q", s_keyword);//GLib.Uri.escape_string(s_keyword, "", true));//Soup.form_encode("", s_keyword).split("=")[1]);
 	}
 }
-}
-*/
+
+}*/

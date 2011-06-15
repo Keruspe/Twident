@@ -65,7 +65,7 @@ public class MainWindow : Window {
 
                 HBox hb_main = new HBox(false, 0);
                 hb_main.pack_start(acc_widget, false, false, 0);
-                hb_main.pack_start(acc_widget, false, false, 0);
+                hb_main.pack_start(vpaned, true, true, 0);
                 
                 VBox main_box = new VBox(false, 0);
                 main_box.pack_start(menubar, false, false, 0);

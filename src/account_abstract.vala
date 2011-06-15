@@ -186,6 +186,7 @@ public abstract class AAccount : GLib.Object {
                 switch(item) {
                 case MenuItems.REMOVE:
                         //stream_was_removed(this, stream);
+                        streams.remove(stream);
                         break;
                 
                 case MenuItems.REFRESH:
