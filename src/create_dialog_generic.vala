@@ -3,7 +3,7 @@ using Gtk;
 public class CreateDialogGeneric : Gtk.Dialog {
 	
 	protected InfoBar pin_info;
-	protected Image acc_img;
+	protected Avatar acc_img;
 	protected Label acc_name;
 	
 	protected Button ok_btn;

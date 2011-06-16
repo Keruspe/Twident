@@ -41,7 +41,7 @@ public class CreateDialog : CreateDialogGeneric {
 		check_btn.clicked.connect(verify_credentials);
 		
 		acc_info = new InfoBar();
-		acc_img = new Image();
+		acc_img = new Avatar(48);
 		acc_name = new Label(null);
 		
 		acc_info.pack_start(acc_img, false, false, 0);

@@ -15,8 +15,10 @@ public class Avatar : Image {
 
         private unowned Thread<void*>? thread = null;
         
-        public Avatar() {
+        public Avatar(int pix_size) {
                 GLib.Object();
+                this.pix_size = pix_size;
+                set_size_request(pix_size, pix_size);
         }
         
         public Avatar.from_url(string url, int pix_size) {
@@ -26,6 +28,11 @@ public class Avatar : Image {
                 set_size_request(pix_size, pix_size);
                 
                 load_pic();
+        }
+
+        public void set_from_url(string url) {
+            this.url = url;
+            load_pic();
         }
         
         public void set_file_name(string file_name) {

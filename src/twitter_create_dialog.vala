@@ -12,11 +12,12 @@ public class CreateDialog : CreateDialogGeneric {
 	private Button access_btn;
 	private InfoBar acc_info;
 	
-	private weak Thread<void*>? request_token_thread = null;
-	private bool must_close = false;
 	private OAuthProxy proxy;
 	
 	private string root_url {get; set; default = "";}
+	private string consumer_key {get; set; default = "";}
+	private string consumer_secret {get; set; default = "";}
+
 	public string s_token;
 	public string s_token_secret;
 	public string s_name;
@@ -28,6 +29,8 @@ public class CreateDialog : CreateDialogGeneric {
 		base(parent, _("Link with %s account").printf(service_name), icon_name);
 		
 		this.root_url = root_url;
+                this.consumer_key = consumer_key;
+                this.consumer_secret = consumer_secret;
 		
 		this.proxy = new OAuthProxy(consumer_key, consumer_secret,
 			root_url, false);
@@ -61,7 +64,7 @@ public class CreateDialog : CreateDialogGeneric {
 		access_btn.clicked.connect(access_token_action);
 		
 		acc_info = new InfoBar();
-		acc_img = new Image();
+		acc_img = new Avatar(48);
 		acc_name = new Label(null);
 		//acc_name.wrap_mode = Pango.WrapMode.WORD;
 		//acc_name.set_ellipsize(Pango.EllipsizeMode.END);
@@ -88,8 +91,7 @@ public class CreateDialog : CreateDialogGeneric {
 		acc_info.hide();
 		
 		destroy.connect(() => {
-			must_close = true;
-			proxy.dispose();
+			this.proxy.dispose();
 		});
 	}
 	
@@ -104,126 +106,30 @@ public class CreateDialog : CreateDialogGeneric {
                             request_token_callback, this);
                         } catch (GLib.Error e) {
                         }
-                        //request_token_thread = Thread.create<void*>(request_token, true);
-			//jo = request_token_thread.join();
 	}
 	
 	private void access_token_action() {
 		access_btn.set_sensitive(false);
 		pin.set_sensitive(false);
-		
-		try {
-			request_token_thread = Thread.create<void*>(access_token, true);
-		} catch(ThreadError e) {
-		}
+	
+                OAuthProxyAuthCallback access_token_callback = access_token;
+                try {
+                    OAuthProxy.access_token_async(proxy, "oauth/access_token", pin.text, access_token_callback, this);
+                } catch (GLib.Error e) {}
 	}
 	
-	public void request_token(OAuthProxy? proxy, Error? error, GLib.Object? weak_object) {
-		//bool answer = false;
-			//answer = OAuthProxy.request_token(proxy, "oauth/request_token", "oob");
-
-                //this.proxy = proxy;
-		/*
-		if(!answer) {
-			
-			if(must_close)
-				return;
-			
-			auth_btn.set_sensitive(true);
-			tprogress.hide();
-			return;
-		}
-                */
+	public void request_token(OAuthProxy proxy, Error? error, GLib.Object? obj) {
+                if (error != null) {
+                    extra_exit();
+                    return;
+                }
 	
-                //string token = OAuthProxy.get_token(this.proxy);
-                token_received(OAuthProxy.get_token(proxy));
-
-                /*
-                Idle.add(() => {
-                    request_token_thread.join();
-                    return false;
-                });*/
-	}
-	
-	private void* access_token() {
-		bool answer = false;
-		
-		try {
-			answer = OAuthProxy.access_token(proxy, "oauth/access_token", pin.text);
-		} catch(GLib.Error e) {
-		}
-		
-		if(!answer) {
-			
-			return if_error();
-		}
-		
-		if(must_close)
-			return null;
-		
-		//fetching credentioals
-		Rest.ProxyCall call = proxy.new_call();
-		call.set_function("account/verify_credentials.xml");
-		call.set_method("GET");
-		
-		try {
-			answer = call.sync();
-		} catch(GLib.Error e) {
-			
-			return if_error();
-		}
-		
-		if(!answer) {
-			
-			return if_error();
-		}
-		
-		
-		Rest.XmlParser parser = new Rest.XmlParser();
-		Rest.XmlNode root = parser.parse_from_data(call.get_payload(),
-			(int64) call.get_payload().length);
-		
-		foreach(var val in root.children.get_values()) {
-			Rest.XmlNode node = (Rest.XmlNode) val;
-			if(node.name == "profile_image_url") {
-				this.s_avatar_url = node.content;
-				string? acc_img_path = img_cache.download(node.content);
-				if(acc_img_path != null)
-					acc_img.set_from_file(acc_img_path);
-			}
-			
-			if(node.name == "screen_name") {
-				this.s_name = node.content;
-				acc_name.set_markup(_("Hello, <b>%s</b>!\nPress 'OK' to add this account".printf(node.content)));
-			}
-		}
-		
-		if(must_close)
-			return null;
-		
-		acc_info.show();
-		
-		Idle.add(() => {
-			this.s_token = OAuthProxy.get_token(proxy);
-			this.s_token_secret = OAuthProxy.get_token_secret(proxy);
-			
-			ok_btn.set_sensitive(true);
-			
-			return false;
-		});
-				
-		return null;
-	}
-	
-	/* When we got a token */
-	private void token_received(string token) {
-		
+                string token = OAuthProxy.get_token(this.proxy);
 		//open link in a browser
 		GLib.Pid pid;
-		
+	        string command = root_url + "oauth/authorize?oauth_token=" + token;	
 		try {
-			GLib.Process.spawn_async(".", {"/usr/bin/xdg-open",
-				root_url + "oauth/authorize?oauth_token=" + token}, null,
+			GLib.Process.spawn_async(".", {"/usr/bin/xdg-open", command}, null,
 				GLib.SpawnFlags.STDOUT_TO_DEV_NULL, null, out pid);
 		} catch(GLib.SpawnError e) {
 		}
@@ -235,13 +141,57 @@ public class CreateDialog : CreateDialogGeneric {
 		set_focus(pin);
 	}
 	
-	private void* if_error() {
-		if(must_close)
-			return null;
+	private void access_token(OAuthProxy proxy, Error? error, GLib.Object? obj) {
+                if (error != null) {
+                    extra_exit();
+                    return;
+                }
+                Rest.ProxyCall call = proxy.new_call();
+		call.set_function("account/verify_credentials.xml");
+		call.set_method("GET");
 		
-		access_btn.set_sensitive(true);
-		pin.set_sensitive(true);
-		return null;
+		Rest.ProxyCallAsyncCallback gc_callback = get_credentials;
+		try {
+                    call.run_async(gc_callback, this);
+                } catch (GLib.Error e) {}
+	}
+	
+	private void get_credentials(Rest.ProxyCall call, Error? error,
+		GLib.Object? obj) {
+		
+		if(error != null) {
+			extra_exit();
+			return;
+		}
+		
+		debug(call.get_payload());
+		
+		User? user = Twitter.Parser.get_single_user(call.get_payload());
+		
+		this.s_avatar_url = user.pic;
+		acc_img.set_from_url(user.pic);
+		this.s_name = user.name;
+		acc_name.set_markup(_("Hello, <b>%s</b>!\nPress <b>OK</b> to add this account".printf(user.name)));
+		
+		acc_info.show();
+		
+		this.s_token = OAuthProxy.get_token(proxy);
+		this.s_token_secret = OAuthProxy.get_token_secret(proxy);
+		
+		ok_btn.set_sensitive(true);
+	}
+	
+	void extra_exit(string msg =
+		_("Something went wrong. You can't complete authorization.")) {
+		
+		MessageDialog dlg = new Gtk.MessageDialog(this, Gtk.DialogFlags.MODAL,
+			Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
+			_(msg));
+		
+		dlg.run();
+		dlg.close();
+		
+		response(ResponseType.CANCEL);
 	}
 }
 
