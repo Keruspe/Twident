@@ -4,6 +4,14 @@ using TwidentEnums;
 using Gee;
 
 public class StreamIcon : EventBox {
+
+	private const double TEXT_W_OFFSET = 6;
+		private const double TEXT_H_OFFSET = 3;
+		private const double FRESH_W_OFFSET = 4;
+		private const double FRESH_H_OFFSET = 10;
+		private double MAX_RGB = (double) uint16.MAX;
+		private const int RADIUS = 4;
+		private const double M_PI = 3.1415926535;
 	
 	public signal void activated(AStream stream);
 	
@@ -70,6 +78,7 @@ public class StreamIcon : EventBox {
 		
 		this.stream.notify["status"].connect(set_status);
 		//this.notify["checked"].connect(set_checked);
+		this.stream.notify["fresh-items"].connect(fresh_items_changed);
 		
 		if(stream.status != StreamStatus.READY) {
 			ParamSpec? pspec = null;
@@ -104,6 +113,11 @@ public class StreamIcon : EventBox {
 		
 		redraw();
 	}
+
+	private void fresh_items_changed(ParamSpec? pspec) {
+		//debug("=======================%i", stream.fresh_items);
+		redraw();
+		}
 	
 	private bool on_enter(Gdk.EventCrossing event) {
 		if(checked)
@@ -272,9 +286,93 @@ public class StreamIcon : EventBox {
 				ctx.fill();
 			}
 		}
+		//draw fresh items
+		if(stream.fresh_items > 0) {
+		Pango.FontDescription font_desc = style.font_desc;
+		string fresh_string = stream.fresh_items.to_string();
 		
+		Gdk.Color fg_color = style.fg[Gtk.StateType.SELECTED];
+		Gdk.Color bg_color = style.bg[Gtk.StateType.SELECTED];
+		Gdk.Color border_color = make_darker(bg_color, 20);
+		
+		ctx.select_font_face(font_desc.get_family(), FontSlant.NORMAL, FontWeight.BOLD);
+		ctx.set_font_size(font_desc.get_size() / 1000);
+		
+		//text margins
+		TextExtents ex_up;
+		ctx.text_extents(fresh_string, out ex_up);
+		
+		int area_width = (int) (ex_up.width + TEXT_W_OFFSET * 2);
+		
+		//draw rect
+		double height = ex_up.height + TEXT_H_OFFSET * 2;
+		double rect_w = ex_up.width + TEXT_W_OFFSET * 2;
+		ctx.set_line_width(0.5);
+		draw_rounded_rect(ctx, bg_color, alloc.x + alloc.width - rect_w - FRESH_W_OFFSET,
+		alloc.y + (alloc.height - height) / 2.0 - FRESH_H_OFFSET,
+		rect_w, height, RADIUS, border_color);
+		
+		//draw text
+		ctx.set_source_rgb(fg_color.red / MAX_RGB, fg_color.green / MAX_RGB,
+		fg_color.blue / MAX_RGB);
+		
+		ctx.move_to(alloc.x - TEXT_W_OFFSET + alloc.width - ex_up.width - FRESH_W_OFFSET,
+		alloc.y + (alloc.height + ex_up.height) / 2.0 - FRESH_H_OFFSET);
+		ctx.show_text(fresh_string);
+		}
 		return false;
 	}
+
+	private void draw_rounded_rect(Context ctx, Gdk.Color bg_color, double x,
+		double y, double width, double height, double radius,
+		Gdk.Color? border_color = null) {
+		
+		double degrees = M_PI / 180.0;
+		
+		ctx.new_sub_path();
+		ctx.arc(x + width - radius, y + radius, radius, -90 * degrees, 0 * degrees);
+		ctx.arc(x + width - radius, y + height - radius, radius, 0 * degrees, 90 * degrees);
+		ctx.arc(x + radius, y + height - radius, radius, 90 * degrees, 180 * degrees);
+		ctx.arc(x + radius, y + radius, radius, 180 * degrees, 270 * degrees);
+		ctx.close_path();
+		
+		set_color(ctx, bg_color);
+		
+		ctx.fill_preserve();
+		
+		if(border_color != null) {
+		set_color(ctx, border_color);
+		ctx.stroke_preserve();
+		}
+		}
+		
+		private void set_color(Context ctx, Gdk.Color color) {
+		//get rgb
+		double r = (double) color.red / MAX_RGB;
+		double g = (double) color.green / MAX_RGB;
+		double b = (double) color.blue / MAX_RGB;
+		
+		ctx.set_source_rgb(r, g, b);
+		}
+				public static Gdk.Color make_darker(Gdk.Color color, int percent) {
+		if(percent > 99)
+		percent = 99;
+		
+		Gdk.Color new_color = color;
+		
+		new_color.red = color.red - (color.red / 100) * percent;
+		new_color.green = color.green - (color.green / 100) * percent;
+		new_color.blue = color.blue - (color.blue / 100) * percent;
+		
+		if(new_color.red < 0)
+		new_color.red = 0;
+		if(new_color.green < 0)
+		new_color.green = 0;
+		if(new_color.blue < 0)
+		new_color.blue = 0;
+		
+		return new_color;
+		}
 	
 	private void draw_rect(Context ctx, Allocation alloc, Gdk.Color color) {
 		Gdk.cairo_rectangle(ctx, {alloc.x, alloc.y, alloc.width, alloc.height});
@@ -598,7 +696,7 @@ public class AccountsWidget : EventBox {
 	
 	private Accounts accounts;
 	
-	private AAccount? current_account = null;
+	//private AAccount? current_account = null;
 	
 	private VBox main_vb;
 	private VBox top_acc;
@@ -649,7 +747,7 @@ public class AccountsWidget : EventBox {
 		foreach(AAccount account in accounts) {
 			//if(account == current_account)
 			//	continue;
-			
+			/*
 			AccountWidget aw = new AccountWidget(account, accounts);
 			aw.account_activate.connect(on_account_activate);
 			
@@ -667,23 +765,47 @@ public class AccountsWidget : EventBox {
 				aw.active = false;
 			}
 			
-			aw.show();
+			aw.show();*/
+			add_account(account);
 		}
 		
 		add(main_vb);
 		
 		accounts.account_was_removed.connect(remove_account);
+		accounts.insert_new_account.connect(add_account);
+		accounts.current_changed.connect(current_changed);
+		}
+		
+		private void add_account(AAccount account) {
+		AccountWidget aw = new AccountWidget(account, accounts);
+		//aw.account_activate.connect(on_account_activate);
+		aw.account_activate.connect(account_activate);
+		
+		StreamsWidget sw = setup_streams(account);
+		accounts_map.set(account, sw);
+				if(account == accounts.current) {
+		//current_account = account;
+		top_acc_h.pack_start(aw, false, false, 2);
+		aw.active = true;
+		
+		streams_box.pack_start(sw, false, false, 0);
+		} else {
+		bottom_acc.pack_start(aw, false, false, 2);
+		aw.active = false;
+		}
+		
+		aw.show();
 	}
 	
 	private void remove_account(AAccount account) {
 		AccountWidget rw = widget_from_account(account);
 		StreamsWidget sw = accounts_map.get(account);
 		
-		if(current_account == account) {
+		if(accounts.current == account) {
 			top_acc_h.remove(rw);
 			streams_box.remove(sw);
 			
-			current_account = null;
+			accounts.current = null;
 			
 			if(bottom_acc.get_children().length() > 0) {
 				((AccountWidget) bottom_acc.get_children().nth_data(0)).on_active();
@@ -702,17 +824,57 @@ public class AccountsWidget : EventBox {
 	}
 	
 	public void setup_current_stream() {
-		if(current_account == null)
+		if(accounts.current == null)
 			return;
 		
-		if(current_account.streams.size < 1)
+		if(accounts.current.streams.size < 1)
 			return;
 		
-		current_account.streams.set_current(current_account.streams.get(0));
+		accounts.current.streams.set_current(accounts.current.streams.get(0));
+	}
+
+	private void account_activate(AccountWidget acc_widget) {
+		accounts.current = acc_widget.account;
+		}
+		
+		private void current_changed(AAccount? new_account, AAccount? old_account) {
+		if(old_account == null)
+	return;
+		
+		AccountWidget? old_widget = widget_from_account(old_account);
+		if(old_widget != null) {
+		top_acc_h.remove(old_widget);
+		old_widget.active = false;
+		bottom_acc.pack_start(old_widget, false, false, 4);
+		
+		if(streams_box.get_children().length() == 1) {
+		streams_box.remove(streams_box.get_children().nth_data(0));
+		}
+		}
+		
+		if(new_account == null)
+		return;
+		
+		AccountWidget? new_widget = widget_from_account(new_account);
+		if(new_widget != null) {
+		bottom_acc.remove(new_widget);
+		top_acc_h.pack_start(new_widget, false, false, 4);
+		
+		new_widget.active = true;
+		streams_box.pack_start(accounts_map.get(new_account), false, false, 0);
+		}
+		
+		AStream? old_stream = old_account.streams.get_current();
+		AStream? stream = new_account.streams.get_current();
+		
+		if(stream == null)
+		return;
+		
+		new_account.streams.cursor_changed(stream, old_stream);
 	}
 	
-	private void on_account_activate(AccountWidget acc_widget) {
-		AccountWidget? tmp_widget = widget_from_account(current_account);
+	/*private void on_account_activate(AccountWidget acc_widget) {
+		AccountWidget? tmp_widget = widget_from_account(accounts.current);
 		if(tmp_widget != null) {
 			top_acc_h.remove(tmp_widget);
 			tmp_widget.active = false;
@@ -726,22 +888,22 @@ public class AccountsWidget : EventBox {
 		bottom_acc.remove(acc_widget);
 		top_acc_h.pack_start(acc_widget, false, false, 4);
 		
-		AStream? old_stream = current_account.streams.get_current(); //get old active stream
+		AStream? old_stream = accounts.current.streams.get_current(); //get old active stream
 		
-		current_account = acc_widget.account;
+		accounts.current = acc_widget.account;
 		
-		if(current_account != null)
-			settings.current_account = accounts.index_of(current_account); //write to settings
+		if(accounts.current != null)
+			settings.current_account = accounts.index_of(accounts.current); //write to settings
 		
-		streams_box.pack_start(accounts_map.get(current_account), false, false, 0);
+		streams_box.pack_start(accounts_map.get(accounts.current), false, false, 0);
 		
-		AStream? stream = current_account.streams.get_current();
+		AStream? stream = accounts.current.streams.get_current();
 		
 		if(stream == null)
 			return;
 		
-		current_account.streams.cursor_changed(stream, old_stream);
-	}
+		accounts.current.streams.cursor_changed(stream, old_stream);
+	}*/
 	
 	private AccountWidget? widget_from_account(AAccount account) {
 		foreach(Widget aw in top_acc_h.get_children()) {

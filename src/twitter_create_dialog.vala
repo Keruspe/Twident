@@ -167,6 +167,10 @@ public class CreateDialog : CreateDialogGeneric {
 		debug(call.get_payload());
 		
 		User? user = Twitter.Parser.get_single_user(call.get_payload());
+		if(user == null) {
+		extra_exit(_("Error when parsed credentials"));
+		return;
+		}
 		
 		this.s_avatar_url = user.pic;
 		acc_img.set_from_url(user.pic);
@@ -186,7 +190,7 @@ public class CreateDialog : CreateDialogGeneric {
 		
 		MessageDialog dlg = new Gtk.MessageDialog(this, Gtk.DialogFlags.MODAL,
 			Gtk.MessageType.ERROR, Gtk.ButtonsType.OK,
-			_(msg));
+			msg);
 		
 		dlg.run();
 		dlg.close();

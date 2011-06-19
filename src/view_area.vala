@@ -15,54 +15,41 @@ public class ViewArea : VBox {
 		homogeneous = true;
 		spacing = 0;
 	
-                /*
-		accounts.insert_new_stream_after.connect((path, stream) => {
-			FeedView view = create_feed_view(stream);
-			view.show_all();
-			set_current_view(stream.account, stream);
-		});*/
-	
                 accounts.account_was_removed.connect((account) => {
                     foreach(AStream st in account.streams) {
                         remove_feed_view(st);
                     }
 		});
+		accounts.insert_new_account.connect(account_setup);
+		}
 		
-		accounts.insert_new_account.connect((account) => {
-			foreach(AStream stream in account.streams) {
-				create_feed_view(stream);
-			}
-		});
-	
-                /*
-                accounts.cursor_changed.connect((new_stream, old_stream) => {
+		public void generate_views() {
+		foreach(AAccount account in accounts) {
+		account_setup(account);
+		}
+		}
+		
+		private void account_setup(AAccount? account) {
+		if(account == null)
+		return;
+		
+		foreach(AStream stream in account.streams) {
+		create_feed_view(stream);
+		}
+		
+		account.streams.removed.connect(remove_feed_view);
+		
+		account.streams.cursor_changed.connect((new_stream, old_stream) => {
                     if(new_stream == null)
                         return; //TODO
 
                     set_current_view(new_stream.account, new_stream, old_stream);
-                });*/
-
-		//generate_views();
-		//show_all();
-	}
-	
-	public void generate_views() {
-		foreach(AAccount account in accounts) {
-                    account.streams.removed.connect(remove_feed_view);
-                    account.streams.added.connect((stream) => {
-                        FeedView view = create_feed_view(stream);
-                        view.show_all();
-                        //set_current_view(stream.account, stream);
-                    });
-			foreach(AStream stream in account.streams) {
-				create_feed_view(stream);
-			}
-                    account.streams.cursor_changed.connect((new_stream, old_stream) => {
-                        if(new_stream == null)
-                            return; //TODO
-                        set_current_view(new_stream.account, new_stream, old_stream);
-                    });
-		}
+                });
+                account.streams.added.connect((stream) => {
+		FeedView view = create_feed_view(stream);
+		view.show_all();
+		//set_current_view(stream.account, stream);
+		});
 	}
 	
 	private void remove_feed_view(AStream stream) {

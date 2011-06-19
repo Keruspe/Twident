@@ -17,6 +17,32 @@ public class Accounts : ArrayList<AAccount> {
 	public signal void do_reply(AAccount account, Status status);
 	public signal void insert_reply(string stream_hash, string status_id, Status result);
         public signal void cursor_changed(AStream? new_stream, AStream? old_stream);
+        public signal void current_changed(AAccount? new_account, AAccount? old_account);
+		
+		private AAccount? _current = null;
+		public AAccount? current {
+		get {
+		return _current;
+		}
+		set {
+		if(value == _current)
+		return;		
+		if(contains(value)) {
+		current_changed(value, _current); //emit signal
+		
+		if(value != null) {
+		AStream? old_stream = _current.streams.get_current();
+		AStream? new_stream = null;
+		
+		new_stream = value.streams.get_current();
+		value.streams.cursor_changed(new_stream, old_stream);
+		}
+		
+		_current = value;
+		settings.current_account = index_of(_current);
+		}
+		}
+		}
 	
 	private string accounts_path;
 	
@@ -24,6 +50,22 @@ public class Accounts : ArrayList<AAccount> {
 		base();
 		
 		init();
+		if(this.size -1 >= settings.current_account) {
+		current = get(settings.current_account);
+		}
+	}
+		/*
+		public void set_current(AAccount? account) {
+		if(account == current)
+		return;
+		
+		if(contains(account)) {
+		current_changed(account, current); //emit signal
+		current = account;
+		} else {
+		debug("no account");
+		}
+		}*/
 	}
 	
 	private void init() {
@@ -279,9 +321,10 @@ public class Accounts : ArrayList<AAccount> {
 		
 		prepare_account(account);
 		account.post_install();
-		insert_new_account(account); //signal for tree and others
 		
 		add(account);
+		insert_new_account(account); //emit signal
+		current = account;
 	}
 	
 	private void prepare_account(AAccount account) {
