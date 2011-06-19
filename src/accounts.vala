@@ -66,7 +66,6 @@ public class Accounts : ArrayList<AAccount> {
 		debug("no account");
 		}
 		}*/
-	}
 	
 	private void init() {
 		string app_dir = Environment.get_user_config_dir() + "/%s".printf(Config.APPNAME);

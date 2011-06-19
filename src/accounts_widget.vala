@@ -302,7 +302,7 @@ public class StreamIcon : EventBox {
 		TextExtents ex_up;
 		ctx.text_extents(fresh_string, out ex_up);
 		
-		int area_width = (int) (ex_up.width + TEXT_W_OFFSET * 2);
+		//int area_width = (int) (ex_up.width + TEXT_W_OFFSET * 2);
 		
 		//draw rect
 		double height = ex_up.height + TEXT_H_OFFSET * 2;
