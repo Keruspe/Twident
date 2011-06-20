@@ -10,7 +10,7 @@ public class StreamIcon : EventBox {
 		private const double FRESH_W_OFFSET = 4;
 		private const double FRESH_H_OFFSET = 10;
 		private double MAX_RGB = (double) uint16.MAX;
-		private const int RADIUS = 4;
+		private const int RADIUS = 5;
 		private const double M_PI = 3.1415926535;
 	
 	public signal void activated(AStream stream);
@@ -573,6 +573,7 @@ public class AccountWidget : EventBox {
 		foreach(StreamEnum stream in account.avaliable_streams().keys) {
 			string label = streams_types.get(stream).name;
 			ImageMenuItem menu_item = new ImageMenuItem.with_label(label);
+                        menu_item.set_always_show_image(true);
 			Image img = streams_types.get(stream).get_menu_image();
 			
 			if(img != null)
