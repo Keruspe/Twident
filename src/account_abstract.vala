@@ -49,7 +49,7 @@ public abstract class AAccount : GLib.Object {
         public virtual string s_name {get; set; default = "unknown";}
         
         /** Update interval in secs */
-        public virtual int s_update_interval {get; set; default = 3000;}
+        public virtual int s_update_interval {get; set; default = 60;}
         
         /** Account string id */
         public abstract string id {get; set;}

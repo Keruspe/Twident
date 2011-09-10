@@ -17,7 +17,12 @@ public abstract class StreamAbstract : AStream {
 	
 	protected abstract void parse_stream(string data);
 	protected abstract void parse_more_stream(string data);
-	
+
+        construct {
+                SmartTimer timer = new SmartTimer(s_update_interval);
+                timer.timeout.connect(menu_refresh);
+        }
+
 	public virtual void set_proxy(Rest.Proxy proxy, string own_name, string password = "") {
 		this.proxy = proxy;
 		this.own_name = own_name;

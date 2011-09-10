@@ -2,7 +2,7 @@ using Gtk;
 using Cairo;
 
 /** Special class for avatars. With rounded corners and shadows */
-public class Avatar : Image {
+public class Avatar : Image, Redrawable {
         
         public string url {get; set; default = "";}
         public int pix_size {get; set; default = 1;}
@@ -110,14 +110,6 @@ public class Avatar : Image {
                 ctx.close_path();
         }
         
-        private void redraw() {
-                if (null == this.window)
-                        return;
-
-                unowned Gdk.Region region = this.window.get_clip_region();
-                this.window.invalidate_region(region, true);
-                this.window.process_updates(true);
-    }
     
     public void load_pic() {
                 try {

@@ -3,7 +3,7 @@ using Cairo;
 
 
 /** Just for custom background */
-public class BgBox : HBox {
+public class BgBox : HBox, Redrawable {
 	
 	public bool fresh {get; set; default = false;}
 	public bool favorited {get; set; default = false;}
@@ -58,12 +58,4 @@ public class BgBox : HBox {
 		ctx.fill();
 	}
 	
-	private void redraw() {
-		if (null == this.window)
-			return;
-
-		unowned Gdk.Region region = this.window.get_clip_region ();
-		this.window.invalidate_region (region, true);
-		this.window.process_updates (true);
-    }
 }

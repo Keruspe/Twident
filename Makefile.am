@@ -63,7 +63,8 @@ base_twident_SOURCES = \
     src/identica_account.vala \
     src/twitter_stream_search.vala \
     src/globals.vala \
-    src/accounts_widget.vala
+    src/accounts_widget.vala \
+    src/redrawable.vala
 
 extra_twident_SOURCES = \
     vapi/time_parser.c \

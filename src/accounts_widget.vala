@@ -3,7 +3,7 @@ using Cairo;
 using TwidentEnums;
 using Gee;
 
-public class StreamIcon : EventBox {
+public class StreamIcon : EventBox, Redrawable {
 
 	private const double TEXT_W_OFFSET = 6;
 		private const double TEXT_H_OFFSET = 3;
@@ -208,14 +208,6 @@ public class StreamIcon : EventBox {
 		return menu_item;
 	}
 	
-	private void redraw() {
-		if (null == this.window)
-			return;
-
-		unowned Gdk.Region region = this.window.get_clip_region ();
-		this.window.invalidate_region (region, true);
-		this.window.process_updates (true);
-    }
 	
 	public override bool expose_event(Gdk.EventExpose event) {
 		Context ctx = Gdk.cairo_create(this.window);
@@ -499,7 +491,7 @@ public class StreamsWidget : VBox {
 	}
 }
 
-public class AccountWidget : EventBox {
+public class AccountWidget : EventBox, Redrawable {
 	
 	public AAccount account;
 	private Accounts accounts;
@@ -556,14 +548,6 @@ public class AccountWidget : EventBox {
 		redraw();
 	}
 	
-	private void redraw() {
-		if (null == this.window)
-			return;
-
-		unowned Gdk.Region region = this.window.get_clip_region();
-		this.window.invalidate_region(region, true);
-		this.window.process_updates(true);
-    }
     
     private bool context_menu(Gdk.EventButton event) {
 		Menu menu = new Menu();

@@ -24,7 +24,7 @@ public abstract class AStream : Object {
 	public abstract MenuItems[] popup_items {owned get;}
 	
 	/** Update interval in secs */
-	public virtual int s_update_interval {get; set; default = 5000;}
+	public virtual int s_update_interval {get; set; default = 60;}
 	
 	public int fresh_items {get; set; default = 0;}
 	
