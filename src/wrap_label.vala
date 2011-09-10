@@ -39,7 +39,8 @@ public class WrapLabel : Label {
 		}
 	}
 	
-	public override void size_request(out Gtk.Requisition req) {		
+	public override void size_request(out Gtk.Requisition req) {
+                req = Gtk.Requisition();
 		req.width  = 0;
 		req.height = m_wrap_height;
 	}

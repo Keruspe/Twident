@@ -4,6 +4,7 @@
 !vapi/*.c
 .aux
 .deps
+.dirstamp
 Makefile
 Makefile.in
 Makefile.in.in

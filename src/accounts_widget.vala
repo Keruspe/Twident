@@ -35,7 +35,7 @@ public class StreamIcon : EventBox {
 	
 	private bool checked {get; set; default = false;}
 	
-	public static enum State {
+	public enum State {
 		ACTIVE,
 		ACTIVE_HOVERED,
 		INACTIVE,

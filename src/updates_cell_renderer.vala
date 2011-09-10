@@ -17,13 +17,10 @@ public class UpdatesCellRrenderer : CellRenderer {
 	
 	public override void get_size(Gtk.Widget widget, Gdk.Rectangle? cell_area,
 		out int x_offset, out int y_offset, out int width, out int height) {
-	
-		if(&x_offset != null) x_offset = 0;
-		if(&y_offset != null) y_offset = 0;
-		if(&width != null) width = area_width;
-		if(&height != null && cell_area != null) height = cell_area.height;
-		
-		return;
+		x_offset = 0;
+		y_offset = 0;
+		width = area_width;
+		height = (cell_area == null) ? width : cell_area.height;
 	}
   
 	public override void render(Gdk.Window window, Gtk.Widget widget,

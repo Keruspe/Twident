@@ -118,14 +118,8 @@ public abstract class AAccount : GLib.Object {
         public void add_stream(StreamEnum stream_type, bool emit_signal = false,
                 HashMap<string, string>? props = null) {
                 
-                Type? stype = null;
-                stype = avaliable_streams().get(stream_type);//streams_types.get_type_by_string(state.stream_type);
+                Type stype = avaliable_streams().get(stream_type);//streams_types.get_type_by_string(state.stream_type);
                         
-                if(stype == null) {
-                        warning("Stream type is not supported");
-                        return;
-                }
-
                 AStream stream = (AStream) GLib.Object.new(stype);
                 stream.account = this;
                 

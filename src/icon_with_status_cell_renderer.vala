@@ -50,13 +50,10 @@ public class IconWithStatusCellRrenderer : CellRenderer {
 	
 	public override void get_size(Gtk.Widget widget, Gdk.Rectangle? cell_area,
 		out int x_offset, out int y_offset, out int width, out int height) {
-	
-		if(&x_offset != null) x_offset = 0;
-		if(&y_offset != null) y_offset = 0;
-		if(&width != null) width = ICON_SIZE + 100;
-		if(&height != null) height = ICON_SIZE;
-		
-		return;
+		x_offset = 0;
+		y_offset = 0;
+		width = ICON_SIZE + 100;
+		height = ICON_SIZE;
 	}
   
 	public override void render(Gdk.Window window, Gtk.Widget widget,
