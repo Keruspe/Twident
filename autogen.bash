@@ -1,7 +1,5 @@
 #!/bin/bash
 mkdir -p m4
-autoreconf -i
+autoreconf -fi -Wall
 intltoolize --force --automake
-./configure $@
-exit $?
 
