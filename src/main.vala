@@ -62,9 +62,9 @@ public static int main (string[] args) {
 	img_cache = new ImgCache();
 	
 	try {
+		settings = new Settings();
 		accounts_types = new AccountsTypes();
 		streams_types = new StreamsTypes();
-		settings = new Settings();
 	} catch(GLib.Error e) {
 	}
 	

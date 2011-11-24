@@ -50,7 +50,7 @@ public class Accounts : ArrayList<AAccount> {
 		base();
 		
 		init();
-		if(this.size -1 >= settings.current_account) {
+		if(settings != null && this.size -1 >= settings.current_account) {
 		current = get(settings.current_account);
 		}
 	}
