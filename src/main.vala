@@ -66,6 +66,9 @@ public static int main (string[] args) {
 		accounts_types = new AccountsTypes();
 		streams_types = new StreamsTypes();
 	} catch(GLib.Error e) {
+            // It's never good to get there, we'd better exit
+            stderr.printf("Fatal error: %s\n", e.message);
+            return -1;
 	}
 	
 	//TestWindow w = new TestWindow();
