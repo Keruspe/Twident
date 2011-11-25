@@ -10,8 +10,8 @@ public class Account : AAccount {
 	protected virtual string consumer_secret {get; set; default = "uYhZKGAvtzyYzGl6KsjTpJ6kdNzDKG8r1dcpoQGVV4";}
 	protected Rest.Proxy proxy;
 	
-	protected virtual string root_url {get; set; default = "http://twitter.com/";}
-	protected virtual string search_url {get; set; default = "http://search.twitter.com/";}
+	protected virtual string root_url {get; set; default = "https://twitter.com/";}
+	protected virtual string search_url {get; set; default = "https://search.twitter.com/";}
 	
 	//protected virtual string service_icon {get; set; default = accounts_types[get_type()].name}
 	//protected virtual string service_icon {get; set; default = "Twitter";}

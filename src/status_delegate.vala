@@ -46,8 +46,8 @@ public class StatusDelegate : EventBox {
 			groups = new Regex("(^|\\s|['\"+&!/\\(-])!([A-Za-z0-9_]+)"); //for identi.ca groups
 			urls = new Regex("((https?|ftp)://([A-Za-z0-9+&@#/%?=~_|!:,.;-]*)([A-Za-z0-9+&@#/%=~_|$]))"); // still needs to be improved for urls containing () such as wikipedia's
 			
-			twitpic_regex = new Regex("(http://twitpic.com/([a-z0-9]+))");
-			imgly_regex = new Regex("(http://img.ly/([a-z0-9]+))");
+			twitpic_regex = new Regex("(https://twitpic.com/([a-z0-9]+))");
+			imgly_regex = new Regex("(https://img.ly/([a-z0-9]+))");
 			
 			// characters must be cleared to know direction of text
 			clear_notice = new Regex("[: \n\t\r♻♺]+|@[^ ]+");
@@ -426,10 +426,10 @@ public class StatusDelegate : EventBox {
 				foreach(string s in match_info.fetch_all()) {
 					switch(hosting_type) {
 					case ImageHostings.TWITPIC:
-						map[s] = "http://twitpic.com/show/mini/" + s.split("twitpic.com/")[1];
+						map[s] = "https://twitpic.com/show/mini/" + s.split("twitpic.com/")[1];
 						break;
 					case ImageHostings.IMGLY:
-						map[s] = "http://img.ly/show/mini/" + s.split("img.ly/")[1];
+						map[s] = "https://img.ly/show/mini/" + s.split("img.ly/")[1];
 						break;
 					}
 					

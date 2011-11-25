@@ -9,7 +9,7 @@ public class ImgCache : Object {
 	
 	construct {
 		try {
-			url_re = new Regex("(http://)([a-zA-Z0-9-\\.]+)/(.*)");
+			url_re = new Regex("(https?://)([a-zA-Z0-9-\\.]+)/(.*)");
 		} catch(GLib.RegexError e) {
 		}
 		

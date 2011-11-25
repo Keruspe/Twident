@@ -61,7 +61,7 @@ public class CreateDialog : CreateDialogGeneric {
 		cprogress.hide();
 		acc_info.hide();
 		
-		Rest.Proxy proxy = new Rest.Proxy("http://identi.ca/api/", false);
+		Rest.Proxy proxy = new Rest.Proxy("https://identi.ca/api/", false);
 		callback = get_response;
 		
 		call = proxy.new_call();

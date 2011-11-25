@@ -12,8 +12,8 @@ public class Account : Twitter.Account {
 	
 	public override string id {get; set; default = "identica";}
 	
-	protected override string root_url {get; set; default = "http://identi.ca/api/";}
-	protected override string search_url {get; set; default = "http://identi.ca/api/";}
+	protected override string root_url {get; set; default = "https://identi.ca/api/";}
+	protected override string search_url {get; set; default = "https://identi.ca/api/";}
 	
 	construct {
 		//base;
@@ -75,14 +75,14 @@ public class Account : Twitter.Account {
 			}
 		}
 		
-		Rest.Proxy search_proxy = new Rest.Proxy("http://identi.ca/api/", false);
+		Rest.Proxy search_proxy = new Rest.Proxy("https://identi.ca/api/", false);
 		((Twitter.StreamAbstract) stream).set_proxy(proxy, s_name, s_password);
 	}
 	
 	public override void post_install() {
 		//create proxy
 		if(proxy == null) {
-			proxy = new Rest.Proxy("http://identi.ca/api/", false);
+			proxy = new Rest.Proxy("https://identi.ca/api/", false);
 		}
 		
 		//load userpic
@@ -108,7 +108,7 @@ public class Account : Twitter.Account {
 			
 			create_dlg.close();
 			
-			proxy = new Rest.Proxy("http://identi.ca/api/", false);
+			proxy = new Rest.Proxy("https://identi.ca/api/", false);
 			
 			return true;
 		}
