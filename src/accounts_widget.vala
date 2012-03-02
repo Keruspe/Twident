@@ -569,7 +569,7 @@ public class AccountWidget : EventBox, Redrawable {
 			streams_menu.append(menu_item);
 		}
 		
-		Gtk.MenuItem streams_item = new MenuItem.with_label("Add stream");
+		var streams_item = new Gtk.MenuItem.with_label("Add stream");
 		streams_item.set_submenu(streams_menu);
 		menu.append(streams_item);
 		
