@@ -162,7 +162,7 @@ public class StreamIcon : EventBox, Redrawable {
 	}
 	
 	private bool context_menu(Gdk.EventButton event) {
-		Menu menu = new Menu();
+		var menu = new Gtk.Menu();
 		
 		foreach(MenuItems item in stream.popup_items) {
 			MenuItems sitem = item;
@@ -550,9 +550,9 @@ public class AccountWidget : EventBox, Redrawable {
 	
     
     private bool context_menu(Gdk.EventButton event) {
-		Menu menu = new Menu();
+		var menu = new Gtk.Menu();
 		
-		Menu streams_menu = new Menu(); //for streams
+		var streams_menu = new Gtk.Menu(); //for streams
 		
 		foreach(StreamEnum stream in account.avaliable_streams().keys) {
 			string label = streams_types.get(stream).name;
@@ -575,7 +575,7 @@ public class AccountWidget : EventBox, Redrawable {
 		
 		foreach(MenuItems item in account.popup_items) {
 			MenuItems aitem = item;
-			MenuItem? menu_item = StreamIcon.item2menu(item); //static method
+			Gtk.MenuItem? menu_item = StreamIcon.item2menu(item); //static method
 			
 			menu_item.activate.connect(() => {
 				accounts.actions_tracker(account, aitem);

@@ -294,7 +294,7 @@ public abstract class AAccount : GLib.Object {
         
         /** Show status context menu */
         public virtual void context_menu(AStream stream, Status status) {
-                Menu menu = new Menu();
+                var menu = new Gtk.Menu();
                 
                 foreach(StatusMenuItems item in status_popup_items) {
                         ImageMenuItem? menu_item = null;
