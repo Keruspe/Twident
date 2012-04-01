@@ -101,6 +101,7 @@ twident_CFLAGS = \
     $(LIBXML_CFLAGS) \
     $(REST_CFLAGS) \
     $(RESTEXTRAS_CFLAGS) \
+    -lm \
     --include config.h \
     -I vapi \
     -DLOCALEDIR=\"${localedir}\" \
