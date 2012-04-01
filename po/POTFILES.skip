@@ -1,0 +1,12 @@
+src/account_abstract.c
+src/accounts.c
+src/accounts_widget.c
+src/identica_create_dialog.c
+src/main_window.c
+src/reply_label.c
+src/search_dialog.c
+src/status_box.c
+src/status_choose_bar.c
+src/status_delegate.c
+src/twitter_account.c
+src/twitter_create_dialog.c
