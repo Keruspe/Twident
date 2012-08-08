@@ -100,7 +100,6 @@ twident_CFLAGS = \
     $(LIBXML_CFLAGS) \
     $(REST_CFLAGS) \
     $(RESTEXTRAS_CFLAGS) \
-    -lm \
     --include config.h \
     -I vapi \
     -DLOCALEDIR=\"${localedir}\" \
@@ -116,6 +115,10 @@ twident_CFLAGS = \
 
 CLEANFILES += \
 	${base_twident_SOURCES:.vala=.c}
+
+twident_LDFLAGS = \
+    -lm \
+    $(LDFLAGS)
 
 twident_LDADD = \
     $(GTK_LIBS) \
