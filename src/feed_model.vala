@@ -22,7 +22,7 @@ public class FeedModel : ArrayList<Status> {
 		status_inserted(index, status, stream); //emit
 	}
 	
-	public override bool add_all(Collection<Status> lst) {
+	public new bool add_all(Collection<Status> lst) {
 		int i = 0;
 		foreach(Status status in lst) {
 			insert(i, status);
